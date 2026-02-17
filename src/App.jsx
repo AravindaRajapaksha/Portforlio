@@ -42,9 +42,33 @@ function Pill({ children }) {
   return <span className="pill">{children}</span>;
 }
 
-function Card({ item }) {
+function Card({ item, index }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const slideDir = index % 2 === 0 ? "slide-left" : "slide-right";
+
   return (
-    <article className="card">
+    <article
+      ref={cardRef}
+      className={`card ${slideDir} ${isVisible ? "revealed" : ""}`}
+    >
       <div className="cardTop">
         <div className="cardDot" />
         <h4 className="cardTitle">{item.title}</h4>
@@ -271,8 +295,8 @@ export default function App() {
         <section className="section" id="about">
           <h3 className="sectionTitle">Work Experience</h3>
           <div className="grid">
-            {projects.map((p) => (
-              <Card key={p.title} item={p} />
+            {projects.map((p, i) => (
+              <Card key={p.title} item={p} index={i} />
             ))}
           </div>
         </section>
