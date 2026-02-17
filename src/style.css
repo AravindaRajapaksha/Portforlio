@@ -621,11 +621,15 @@ body {
     display: flex;
     flex-direction: column-reverse;
     gap: 30px;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
   }
 
   .avatarWrap {
     align-items: center;
     width: 100%;
+    transform: none;
   }
 
   .avatar {
