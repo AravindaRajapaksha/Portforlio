@@ -42,9 +42,9 @@ function Pill({ children }) {
   return <span className="pill">{children}</span>;
 }
 
-function Card({ item, index }) {
+function Reveal({ children, direction = "bottom", delay = 0 }) {
   const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef(null);
+  const ref = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,45 +54,55 @@ function Card({ item, index }) {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
 
-    if (cardRef.current) observer.observe(cardRef.current);
-
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  const slideDir = index % 2 === 0 ? "slide-left" : "slide-right";
+  return (
+    <div
+      ref={ref}
+      className={`reveal reveal-${direction} ${isVisible ? "revealed" : ""}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Card({ item, index }) {
+  const slideDir = index % 2 === 0 ? "left" : "right";
 
   return (
-    <article
-      ref={cardRef}
-      className={`card ${slideDir} ${isVisible ? "revealed" : ""}`}
-    >
-      <div className="cardTop">
-        <div className="cardDot" />
-        <h4 className="cardTitle">{item.title}</h4>
-      </div>
+    <Reveal direction={slideDir}>
+      <article className="card">
+        <div className="cardTop">
+          <div className="cardDot" />
+          <h4 className="cardTitle">{item.title}</h4>
+        </div>
 
-      <p className="cardDesc">{item.desc}</p>
+        <p className="cardDesc">{item.desc}</p>
 
-      <div className="cardTags">
-        {item.tags.map((t) => (
-          <span key={t} className="tag">
-            {t}
-          </span>
-        ))}
-      </div>
+        <div className="cardTags">
+          {item.tags.map((t) => (
+            <span key={t} className="tag">
+              {t}
+            </span>
+          ))}
+        </div>
 
-      <div className="cardActions">
-        <a className="miniBtn" href="#" onClick={(e) => e.preventDefault()}>
-          GitHub
-        </a>
-        <a className="miniBtn ghostMini" href="#" onClick={(e) => e.preventDefault()}>
-          Live
-        </a>
-      </div>
-    </article>
+        <div className="cardActions">
+          <a className="miniBtn" href="#" onClick={(e) => e.preventDefault()}>
+            GitHub
+          </a>
+          <a className="miniBtn ghostMini" href="#" onClick={(e) => e.preventDefault()}>
+            Live
+          </a>
+        </div>
+      </article>
+    </Reveal>
   );
 }
 
@@ -230,70 +240,78 @@ export default function App() {
       <main className="wrap">
         <section className="hero">
           <div className="heroHeader">
-            <div className="heroHeaderText">
-              <p className="tiny">
-                Hello! I am <span className="accent">{profileData.name}</span>
-              </p>
+            <Reveal direction="left">
+              <div className="heroHeaderText">
+                <p className="tiny">
+                  Hello! I am <span className="accent">{profileData.name}</span>
+                </p>
 
-              <h1 className="title">
-                {profileData.title_L1} <br />
-                {profileData.title_L2} <br />
-                {profileData.title_L3_pre} <span className="accent underline">{profileData.title_L3_accent}</span>...
-              </h1>
+                <h1 className="title">
+                  {profileData.title_L1} <br />
+                  {profileData.title_L2} <br />
+                  {profileData.title_L3_pre} <span className="accent underline">{profileData.title_L3_accent}</span>...
+                </h1>
 
-              <p className="sub">
-                {profileData.subtitle} <br />
-                {profileData.description}
-              </p>
-            </div>
-
-            <div className="avatarWrap">
-              <div className="avatar">
-                <img
-                  src={profileData.imgSrc}
-                  alt={profileData.name}
-                  className="avatarImg"
-                />
+                <p className="sub">
+                  {profileData.subtitle} <br />
+                  {profileData.description}
+                </p>
               </div>
-            </div>
+            </Reveal>
+
+            <Reveal direction="right">
+              <div className="avatarWrap">
+                <div className="avatar">
+                  <img
+                    src={profileData.imgSrc}
+                    alt={profileData.name}
+                    className="avatarImg"
+                  />
+                </div>
+              </div>
+            </Reveal>
           </div>
 
           <div className="heroRow">
             {/* LEFT TEXT */}
-            <div className="heroText">
-              <h2 className="bigLine">
-                I’m a Software Engineer<span className="accent">.</span>
-              </h2>
+            <Reveal direction="left" delay={200}>
+              <div className="heroText">
+                <h2 className="bigLine">
+                  I’m a Software Engineer<span className="accent">.</span>
+                </h2>
 
-              <p className="muted">
-                Currently, I’m a Software Engineering undergraduate at OUSL. I’m seeking an
-                internship/training opportunity to apply and grow my skills in web/backend development.
-              </p>
+                <p className="muted">
+                  Currently, I’m a Software Engineering undergraduate at OUSL. I’m seeking an
+                  internship/training opportunity to apply and grow my skills in web/backend development.
+                </p>
 
-              <div className="btnRow">
-                <a className="btn primary" href="#about">
-                  See Work
-                </a>
-                <a className="btn ghost" href="#contact">
-                  Contact
-                </a>
+                <div className="btnRow">
+                  <a className="btn primary" href="#about">
+                    See Work
+                  </a>
+                  <a className="btn ghost" href="#contact">
+                    Contact
+                  </a>
+                </div>
+
+                <div className="chips">
+                  <Pill>Python</Pill>
+                  <Pill>Django</Pill>
+                  <Pill>JavaScript</Pill>
+                  <Pill>SQL</Pill>
+                  <Pill>Git</Pill>
+                </div>
               </div>
-
-              <div className="chips">
-                <Pill>Python</Pill>
-                <Pill>Django</Pill>
-                <Pill>JavaScript</Pill>
-                <Pill>SQL</Pill>
-                <Pill>Git</Pill>
-              </div>
-            </div>
+            </Reveal>
 
             {/* RIGHT PROFILE (TOP ALIGNED) - MOVED TO TOP OF HERO */}
           </div>
         </section>
 
         <section className="section" id="about">
-          <h3 className="sectionTitle">Work Experience</h3>
+          <Reveal direction="bottom">
+            <h3 className="sectionTitle">Work Experience</h3>
+          </Reveal>
           <div className="grid">
             {projects.map((p, i) => (
               <Card key={p.title} item={p} index={i} />
@@ -302,46 +320,50 @@ export default function App() {
         </section>
 
         <section className="section center" id="lab">
-          <p className="muted small">
-            I’m currently looking to join a cross-functional team that values building accessible,
-            delightful software experiences.
-          </p>
+          <Reveal direction="bottom">
+            <p className="muted small">
+              I’m currently looking to join a cross-functional team that values building accessible,
+              delightful software experiences.
+            </p>
 
-          <div className="skillArc">
-            {["🐍", "🟩", "🟨", "🧩", "🗄️", "🔧"].map((x, i) => (
-              <span key={i} className="arcIcon">
-                {x}
-              </span>
-            ))}
-          </div>
-
-          <div className="orbitWrap">
-            <div className="planet">
-              <span className="planetMark">Σ</span>
+            <div className="skillArc">
+              {["🐍", "🟩", "🟨", "🧩", "🗄️", "🔧"].map((x, i) => (
+                <span key={i} className="arcIcon">
+                  {x}
+                </span>
+              ))}
             </div>
 
-            <svg className="orbits" viewBox="0 0 800 260" aria-hidden="true">
-              <path d="M40,210 C190,120 310,90 400,90 C490,90 610,120 760,210" />
-              <path d="M80,228 C220,150 320,130 400,130 C480,130 580,150 720,228" />
-              <path d="M120,244 C250,185 330,175 400,175 C470,175 550,185 680,244" />
-            </svg>
-          </div>
+            <div className="orbitWrap">
+              <div className="planet">
+                <span className="planetMark">Σ</span>
+              </div>
+
+              <svg className="orbits" viewBox="0 0 800 260" aria-hidden="true">
+                <path d="M40,210 C190,120 310,90 400,90 C490,90 610,120 760,210" />
+                <path d="M80,228 C220,150 320,130 400,130 C480,130 580,150 720,228" />
+                <path d="M120,244 C250,185 330,175 400,175 C470,175 550,185 680,244" />
+              </svg>
+            </div>
+          </Reveal>
         </section>
 
         <section className="section" id="contact">
-          <h3 className="sectionTitle">Contact</h3>
+          <Reveal direction="bottom">
+            <h3 className="sectionTitle">Contact</h3>
 
-          <div className="contact">
-            <a className="pillBig" href="mailto:www.aravindadocumant@gmail.com">
-              ✉️ www.aravindadocumant@gmail.com
-            </a>
-            <a className="pillBig" href="https://github.com/" target="_blank" rel="noreferrer">
-              🧷 github.com/shehan
-            </a>
-            <a className="pillBig" href="https://linkedin.com/" target="_blank" rel="noreferrer">
-              🔗 linkedin.com/in/shehan
-            </a>
-          </div>
+            <div className="contact">
+              <a className="pillBig" href="mailto:www.aravindadocumant@gmail.com">
+                ✉️ www.aravindadocumant@gmail.com
+              </a>
+              <a className="pillBig" href="https://github.com/" target="_blank" rel="noreferrer">
+                🧷 github.com/shehan
+              </a>
+              <a className="pillBig" href="https://linkedin.com/" target="_blank" rel="noreferrer">
+                🔗 linkedin.com/in/shehan
+              </a>
+            </div>
+          </Reveal>
 
           <footer className="foot">Built with React • Hosted on GitHub Pages</footer>
         </section>
