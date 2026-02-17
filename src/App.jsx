@@ -18,6 +18,8 @@ const projects = [
     tags: ["React", "UI", "Animations"],
   },
   {
+    title: "Database Management",
+    desc: "Optimized MySQL database for a high-traffic e-commerce platform.",
     tags: ["SQL", "MySQL", "DB"],
   },
 ];
