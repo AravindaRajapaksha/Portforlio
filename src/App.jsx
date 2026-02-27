@@ -6,21 +6,33 @@ const projects = [
     title: "Student Management System",
     desc: "Django web app to manage students, courses, and enrollments.",
     tags: ["Django", "SQLite", "Bootstrap"],
+    img: "/projects/student_mgmt.png",
   },
   {
     title: "Task Tracker",
     desc: "To-do app with CRUD + validation + local storage.",
     tags: ["JavaScript", "HTML", "CSS"],
+    img: "/projects/task_tracker.png",
   },
   {
     title: "Portfolio Website",
     desc: "My personal portfolio with magic UI + animations.",
     tags: ["React", "UI", "Animations"],
+    img: "/projects/portfolio.png",
   },
   {
     title: "Database Management",
     desc: "Optimized MySQL database for a high-traffic e-commerce platform.",
     tags: ["SQL", "MySQL", "DB"],
+    img: "/projects/database.png",
+  },
+  {
+    title: "QR Code Generator",
+    desc: "Python tool that generates customizable QR codes from any URL or text input.",
+    tags: ["Python", "qrcode", "PIL"],
+    img: "/projects/qr_generator.png",
+    github: "#",
+    live: "#",
   },
 ];
 
@@ -78,6 +90,12 @@ function Card({ item, index }) {
   return (
     <Reveal direction={slideDir}>
       <article className="card">
+        {item.img && (
+          <div className="cardImgWrap">
+            <img src={item.img} alt={item.title} className="cardImg" />
+          </div>
+        )}
+
         <div className="cardTop">
           <div className="cardDot" />
           <h4 className="cardTitle">{item.title}</h4>
@@ -94,10 +112,10 @@ function Card({ item, index }) {
         </div>
 
         <div className="cardActions">
-          <a className="miniBtn" href="#" onClick={(e) => e.preventDefault()}>
+          <a className="miniBtn" href={item.github || "#"} target={item.github && item.github !== "#" ? "_blank" : undefined} rel="noreferrer">
             GitHub
           </a>
-          <a className="miniBtn ghostMini" href="#" onClick={(e) => e.preventDefault()}>
+          <a className="miniBtn ghostMini" href={item.live || "#"} target={item.live && item.live !== "#" ? "_blank" : undefined} rel="noreferrer">
             Live
           </a>
         </div>

@@ -408,10 +408,54 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
   border: 1px solid rgba(255, 255, 255, .10);
   box-shadow: var(--shadow);
-  padding: 16px;
+  padding: 0;
   position: relative;
   overflow: hidden;
   transition: transform .18s ease, border-color .18s ease;
+}
+
+.cardImgWrap {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  position: relative;
+}
+
+.cardImgWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(8, 4, 18, 0.85) 100%);
+  pointer-events: none;
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .cardImg {
+  transform: scale(1.05);
+}
+
+.cardTop,
+.cardDesc,
+.cardTags,
+.cardActions {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.cardTop {
+  padding-top: 14px;
+}
+
+.cardActions {
+  padding-bottom: 16px;
 }
 
 /* Global Reveal Styles */
