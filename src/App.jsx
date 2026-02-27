@@ -124,6 +124,20 @@ function Card({ item, index }) {
   );
 }
 
+function ContactCard({ icon, label, value, href, delay = 0 }) {
+  return (
+    <Reveal direction="bottom" delay={delay}>
+      <a className="contactCard" href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+        <div className="contactCardIcon">{icon}</div>
+        <div className="contactCardContent">
+          <span className="contactCardLabel">{label}</span>
+          <span className="contactCardValue">{value}</span>
+        </div>
+      </a>
+    </Reveal>
+  );
+}
+
 import CursorFollower from "./CursorFollower";
 
 export default function App() {
@@ -216,7 +230,7 @@ export default function App() {
           <nav className="navLinks">
             <a href="#home">Home</a>
             <a href="#about">About</a>
-            <a href="#lab">Lab</a>
+            <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
           </nav>
 
@@ -241,16 +255,16 @@ export default function App() {
 
         <div className={`mobileMenu ${mobileOpen ? "open" : ""}`}>
           <a href="#home" onClick={() => setMobileOpen(false)}>
-            Home
+            🏠 Home
           </a>
           <a href="#about" onClick={() => setMobileOpen(false)}>
-            About
+            👤 About
           </a>
-          <a href="#lab" onClick={() => setMobileOpen(false)}>
-            Lab
+          <a href="#projects" onClick={() => setMobileOpen(false)}>
+            🚀 Projects
           </a>
           <a href="#contact" onClick={() => setMobileOpen(false)}>
-            Contact
+            ✉️ Contact
           </a>
         </div>
       </header>
@@ -315,8 +329,13 @@ export default function App() {
                 <div className="chips">
                   <Pill>Python</Pill>
                   <Pill>Django</Pill>
+                  <Pill>React</Pill>
                   <Pill>JavaScript</Pill>
+                  <Pill>HTML</Pill>
+                  <Pill>CSS</Pill>
                   <Pill>SQL</Pill>
+                  <Pill>Android Studio</Pill>
+                  <Pill>Postman</Pill>
                   <Pill>Git</Pill>
                 </div>
               </div>
@@ -328,7 +347,32 @@ export default function App() {
 
         <section className="section" id="about">
           <Reveal direction="bottom">
-            <h3 className="sectionTitle">Work Experience</h3>
+            <h3 className="sectionTitle">About Me</h3>
+          </Reveal>
+          <Reveal direction="bottom" delay={100}>
+            <div className="aboutCard">
+              <p className="muted">
+                {profileData.bio}
+              </p>
+              <div className="chips" style={{ marginTop: "1.2rem" }}>
+                <Pill>Python</Pill>
+                <Pill>Django</Pill>
+                <Pill>React</Pill>
+                <Pill>JavaScript</Pill>
+                <Pill>HTML</Pill>
+                <Pill>CSS</Pill>
+                <Pill>SQL</Pill>
+                <Pill>Android Studio</Pill>
+                <Pill>Postman</Pill>
+                <Pill>Git</Pill>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        <section className="section" id="projects">
+          <Reveal direction="bottom">
+            <h3 className="sectionTitle">Projects</h3>
           </Reveal>
           <div className="grid">
             {projects.map((p, i) => (
@@ -337,54 +381,58 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section center" id="lab">
-          <Reveal direction="bottom">
-            <p className="muted small">
-              I’m currently looking to join a cross-functional team that values building accessible,
-              delightful software experiences.
-            </p>
-
-            <div className="skillArc">
-              {["🐍", "🟩", "🟨", "🧩", "🗄️", "🔧"].map((x, i) => (
-                <span key={i} className="arcIcon">
-                  {x}
-                </span>
-              ))}
-            </div>
-
-            <div className="orbitWrap">
-              <div className="planet">
-                <span className="planetMark">Σ</span>
-              </div>
-
-              <svg className="orbits" viewBox="0 0 800 260" aria-hidden="true">
-                <path d="M40,210 C190,120 310,90 400,90 C490,90 610,120 760,210" />
-                <path d="M80,228 C220,150 320,130 400,130 C480,130 580,150 720,228" />
-                <path d="M120,244 C250,185 330,175 400,175 C470,175 550,185 680,244" />
-              </svg>
-            </div>
-          </Reveal>
-        </section>
-
         <section className="section" id="contact">
           <Reveal direction="bottom">
-            <h3 className="sectionTitle">Contact</h3>
-
-            <div className="contact">
-              <a className="pillBig" href="mailto:www.aravindadocumant@gmail.com">
-                ✉️ www.aravindadocumant@gmail.com
-              </a>
-              <a className="pillBig" href="https://github.com/" target="_blank" rel="noreferrer">
-                🧷 github.com/shehan
-              </a>
-              <a className="pillBig" href="https://linkedin.com/" target="_blank" rel="noreferrer">
-                🔗 linkedin.com/in/shehan
-              </a>
-            </div>
+            <h3 className="sectionTitle">Get In Touch</h3>
           </Reveal>
 
-          <footer className="foot">Built with React • Hosted on GitHub Pages</footer>
+          <div className="contactGrid">
+            <ContactCard
+              icon="✉️"
+              label="Email"
+              value="www.aravindadocumant@gmail.com"
+              href="mailto:www.aravindadocumant@gmail.com"
+              delay={100}
+            />
+            <ContactCard
+              icon="📞"
+              label="Phone"
+              value="0778052582"
+              href="tel:0778052582"
+              delay={150}
+            />
+            <ContactCard
+              icon="👥"
+              label="Facebook"
+              value="Aravinda Rajapaksha"
+              href="https://www.facebook.com/share/1CckL2VFcS/"
+              delay={200}
+            />
+            <ContactCard
+              icon="📸"
+              label="Instagram"
+              value="@aravinda_rajapaksha_"
+              href="https://www.instagram.com/aravinda_rajapaksha_?igsh=MXBxNHp0ZGZ3aGdieg=="
+              delay={250}
+            />
+            <ContactCard
+              icon="🧷"
+              label="GitHub"
+              value="github.com/aravinda"
+              href="https://github.com/"
+              delay={300}
+            />
+            <ContactCard
+              icon="🔗"
+              label="LinkedIn"
+              value="linkedin.com/in/aravinda"
+              href="https://linkedin.com/"
+              delay={350}
+            />
+          </div>
         </section>
+
+        <footer className="foot">Built with React • Hosted on GitHub Pages</footer>
       </main>
     </div>
   );
