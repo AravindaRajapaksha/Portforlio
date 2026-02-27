@@ -145,6 +145,19 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const canvasRef = useRef(null);
 
+  // Smooth scroll to section on load if hash exists
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const id = hash.replace("#", "");
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 500); // Small delay to let animations settle
+    }
+  }, []);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
