@@ -237,10 +237,6 @@ export default function App() {
 
       <header className="nav">
         <div className="navInner">
-          <a className="brand" href="#home" aria-label="home">
-            <span className="brandMark">Σ</span>
-          </a>
-
           <nav className="navLinks">
             <a href="#home">Home</a>
             <a href="#about">About</a>
