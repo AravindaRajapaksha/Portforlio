@@ -237,6 +237,11 @@ export default function App() {
 
       <header className="nav">
         <div className="navInner">
+          <a className="brand" href="#home" aria-label="home">
+            <div className="brandDot" />
+            <span className="brandName">Aravinda</span>
+          </a>
+
           <nav className="navLinks">
             <a href="#home">Home</a>
             <a href="#about">About</a>
