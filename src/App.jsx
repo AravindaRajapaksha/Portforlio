@@ -37,7 +37,7 @@ const projects = [
 ];
 
 const profileData = {
-  name: "Shehan",
+  name: "Shehan Aravinda",
   title_L1: "A developer who",
   title_L2: "Judges a book",
   title_L3_pre: "by its",
@@ -45,7 +45,8 @@ const profileData = {
   subtitle: "Software Engineering Undergraduate | Backend & Web Developer",
   description: "Building clean web apps using Python, Django, and modern web technologies.",
   bio_title: "I’m a Software Engineer.",
-  bio: "Currently, I’m a Software Engineering undergraduate at OUSL. I’m seeking an internship/training opportunity to apply and grow my skills in web/backend development.",
+  bio: "Software Engineering undergraduate at OUSL. I’m seeking an internship/training opportunity to apply and grow my skills in web/backend development.",
+  aboutName: "I'm Shehan Aravinda",
   // Use the image found in public folder
   imgSrc: "/Profile.png",
 };
@@ -364,6 +365,7 @@ export default function App() {
           </Reveal>
           <Reveal direction="bottom" delay={100}>
             <div className="aboutCard">
+              <h2 className="aboutName">{profileData.aboutName}</h2>
               <p className="muted">
                 {profileData.bio}
               </p>
