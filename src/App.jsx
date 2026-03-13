@@ -7,16 +7,20 @@ const projects = [
   {
     title: "QR Code Generator",
     desc: "Python tool that generates customizable QR codes from any URL or text input.",
+    longDesc: "A complete Python-based QR code generation utility. It allows users to input URLs, text, or contact information and generates a high-quality SVG or PNG image. The tool supports custom colors, sizes, and error correction levels.",
     tags: ["Python", "qrcode", "PIL"],
     img: "/projects/qr_generator.png",
+    images: ["/projects/qr_generator.png"], // Add more image paths here as you upload them
     github: "https://github.com/AravindaRajapaksha/QR-Code-generator",
     live: "#",
   },
   {
     title: "Factory Machine Monitoring System",
     desc: "Real-time factory machine monitoring dashboard with live charts.",
+    longDesc: "This group project is a real-time dashboard designed for factory supervisors. It monitors machine health, uptime, and output using sensors. Data is streamed via Firebase and visualized with interactive charts to help predict maintenance needs.",
     tags: ["Vue.js", "Firebase", "Chart.js"],
     img: "/projects/FactoryMachineMonitoringSystem.png",
+    images: ["/projects/FactoryMachineMonitoringSystem.png"], // Add more image paths here as you upload them
     github: "https://github.com/Group-Project-Ousl/factory-machine-monitoring-system",
     live: "#",
   },
@@ -71,7 +75,7 @@ function Reveal({ children, direction = "bottom", delay = 0 }) {
   );
 }
 
-function Card({ item, index }) {
+function Card({ item, index, onView }) {
   const slideDir = index % 2 === 0 ? "left" : "right";
   const hasMultipleImages = item.images && item.images.length > 0;
   const images = hasMultipleImages ? item.images : (item.img ? [item.img] : []);
@@ -128,12 +132,53 @@ function Card({ item, index }) {
           <a className="miniBtn" href={item.github || "#"} target={item.github && item.github !== "#" ? "_blank" : undefined} rel="noreferrer">
             GitHub
           </a>
-          <a className="miniBtn ghostMini" href={item.live || "#"} target={item.live && item.live !== "#" ? "_blank" : undefined} rel="noreferrer">
+          <button className="miniBtn ghostMini" onClick={() => onView(item)}>
             View
-          </a>
+          </button>
         </div>
       </article>
     </Reveal>
+  );
+}
+
+function ProjectModal({ item, onClose }) {
+  if (!item) return null;
+
+  const images = item.images && item.images.length > 0 ? item.images : (item.img ? [item.img] : []);
+
+  return (
+    <div className="modalOverlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modalClose" onClick={onClose}>✕</button>
+        
+        <div className="modalContent">
+          <div className="modalGallery">
+            {images.map((imgSrc, i) => (
+              <img key={i} src={imgSrc} alt={item.title} className="modalImg" />
+            ))}
+          </div>
+
+          <h2 className="modalTitle">{item.title}</h2>
+          
+          <div className="modalTags">
+            {item.tags.map(tag => <span key={tag} className="tag" style={{marginRight: '8px'}}>{tag}</span>)}
+          </div>
+
+          <p className="modalDesc">{item.longDesc || item.desc}</p>
+
+          <div className="modalActions">
+            <a className="btn primary" href={item.github || "#"} target="_blank" rel="noreferrer">
+              GitHub Repo
+            </a>
+            {item.live && item.live !== "#" && (
+              <a className="btn ghost" href={item.live} target="_blank" rel="noreferrer">
+                Live Demo
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -156,6 +201,7 @@ import CursorFollower from "./CursorFollower";
 export default function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const canvasRef = useRef(null);
 
   // Smooth scroll to section on load if hash exists
@@ -404,10 +450,14 @@ export default function App() {
           </Reveal>
           <div className="grid">
             {projects.map((p, i) => (
-              <Card key={p.title} item={p} index={i} />
+              <Card key={p.title} item={p} index={i} onView={setSelectedProject} />
             ))}
           </div>
         </section>
+
+        {selectedProject && (
+          <ProjectModal item={selectedProject} onClose={() => setSelectedProject(null)} />
+        )}
 
         <section className="section" id="contact">
           <Reveal direction="bottom">
