@@ -24,6 +24,16 @@ const projects = [
     github: "https://github.com/Group-Project-Ousl/factory-machine-monitoring-system",
     live: "#",
   },
+  {
+    title: "Python Calculator",
+    desc: "A sleek, functional calculator built with Python's Tkinter.",
+    longDesc: "A simple yet powerful calculator application built using Python and the Tkinter library. It features a modern UI design inspired by Figma, supporting basic arithmetic operations with an emphasis on clean code and user experience.",
+    tags: ["Python", "Tkinter", "UI/UX"],
+    img: "/projects/Calculator.png",
+    images: ["/projects/Calculator.png"],
+    github: "https://github.com/AravindaRajapaksha/Calculator",
+    live: "#",
+  },
 ];
 
 const profileData = {
