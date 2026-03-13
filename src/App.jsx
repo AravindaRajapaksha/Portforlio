@@ -34,6 +34,16 @@ const projects = [
     github: "https://github.com/AravindaRajapaksha/Calculator",
     live: "#",
   },
+  {
+    title: "ElectroStore - E-commerce UI",
+    desc: "A high-fidelity UI/UX design for an electronic components store.",
+    longDesc: "ElectroStore is a modern, dark-themed e-commerce platform designed for electronic components. The design includes a full workflow from landing page to product catalog, featuring high-quality component imagery, advanced sidebar filters, and a sleek tech-focused aesthetic. Built with a focus on professional engineers and hobbyists.",
+    tags: ["Figma", "UI/UX", "E-commerce"],
+    img: "/projects/ElectroStore.png",
+    images: ["/projects/ElectroStore.png"],
+    github: "#",
+    live: "https://www.figma.com/design/SjYkCfRrejIai2wvLxwoFw/Untitled?node-id=0-1&p=f&t=AkWwdidIOEYvvFRX-0",
+  },
 ];
 
 const profileData = {
