@@ -129,7 +129,7 @@ function Card({ item, index }) {
             GitHub
           </a>
           <a className="miniBtn ghostMini" href={item.live || "#"} target={item.live && item.live !== "#" ? "_blank" : undefined} rel="noreferrer">
-            Live
+            View
           </a>
         </div>
       </article>
