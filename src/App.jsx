@@ -2,24 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import "./style.css";
 
 const projects = [
-  {
-    title: "Student Management System",
-    desc: "Django web app to manage students, courses, and enrollments.",
-    tags: ["Django", "SQLite", "Bootstrap"],
-    img: "/projects/student_mgmt.png",
-  },
-  {
-    title: "Database Management",
-    desc: "Optimized MySQL database for a high-traffic e-commerce platform.",
-    tags: ["SQL", "MySQL", "DB"],
-    img: "/projects/database.png",
-  },
+
+
   {
     title: "QR Code Generator",
     desc: "Python tool that generates customizable QR codes from any URL or text input.",
     tags: ["Python", "qrcode", "PIL"],
     img: "/projects/qr_generator.png",
-    github: "#",
+    github: "https://github.com/AravindaRajapaksha/QR-Code-generator",
     live: "#",
   },
   {
