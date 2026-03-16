@@ -72,12 +72,9 @@ function Reveal({ children, direction = "bottom", delay = 0 }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.05 }
+      { threshold: 0.12 }
     );
 
     if (ref.current) observer.observe(ref.current);
