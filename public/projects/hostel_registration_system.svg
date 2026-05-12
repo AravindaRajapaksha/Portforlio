@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Hostel Registration System project artwork</title>
+  <desc id="desc">A dark blue project poster with a hostel building, registration card, and QR symbol.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071421" />
+      <stop offset="55%" stop-color="#0b2235" />
+      <stop offset="100%" stop-color="#123a54" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4fd1c5" />
+      <stop offset="100%" stop-color="#7dd3fc" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10283d" />
+      <stop offset="100%" stop-color="#0b1d2c" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)" rx="40" />
+  <circle cx="1010" cy="138" r="180" fill="#4fd1c5" opacity="0.08" />
+  <circle cx="198" cy="760" r="220" fill="#38bdf8" opacity="0.08" />
+
+  <g opacity="0.2">
+    <path d="M0 718C180 652 292 652 430 718S712 784 850 718s230-66 350 0v182H0Z" fill="#4fd1c5" />
+    <path d="M0 760C150 714 284 708 404 746s304 38 458-6 260-48 338-10v170H0Z" fill="#0ea5e9" />
+  </g>
+
+  <g transform="translate(92 90)">
+    <rect x="0" y="0" width="230" height="42" rx="21" fill="#0e2435" stroke="#28506d" />
+    <circle cx="28" cy="21" r="8" fill="#4fd1c5" />
+    <text x="48" y="28" fill="#d7f5f2" font-family="Segoe UI, Arial, sans-serif" font-size="24">Portfolio Project</text>
+
+    <text x="0" y="126" fill="#f5fbff" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700">Hostel Registration</text>
+    <text x="0" y="198" fill="#7dd3fc" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700">System</text>
+
+    <text x="0" y="262" fill="#b9d7ea" font-family="Segoe UI, Arial, sans-serif" font-size="28">
+      Student booking, approvals, payment tracking, and QR-based hostel access
+    </text>
+
+    <g transform="translate(0 316)">
+      <rect x="0" y="0" width="148" height="44" rx="22" fill="#123149" stroke="#2f6f8f" />
+      <text x="74" y="29" text-anchor="middle" fill="#dff7ff" font-family="Segoe UI, Arial, sans-serif" font-size="22">React</text>
+      <rect x="164" y="0" width="174" height="44" rx="22" fill="#123149" stroke="#2f6f8f" />
+      <text x="251" y="29" text-anchor="middle" fill="#dff7ff" font-family="Segoe UI, Arial, sans-serif" font-size="22">Supabase</text>
+      <rect x="354" y="0" width="182" height="44" rx="22" fill="#123149" stroke="#2f6f8f" />
+      <text x="445" y="29" text-anchor="middle" fill="#dff7ff" font-family="Segoe UI, Arial, sans-serif" font-size="22">ESP32-CAM</text>
+    </g>
+  </g>
+
+  <g transform="translate(714 198)">
+    <rect x="92" y="122" width="234" height="262" rx="28" fill="url(#panel)" stroke="#2f6f8f" stroke-width="3" />
+    <rect x="124" y="160" width="170" height="18" rx="9" fill="#234860" />
+    <rect x="124" y="202" width="122" height="18" rx="9" fill="#234860" />
+    <rect x="124" y="244" width="150" height="18" rx="9" fill="#234860" />
+    <rect x="124" y="290" width="112" height="74" rx="18" fill="#0a1622" stroke="#4fd1c5" />
+    <path d="M144 310h22v22h-10v10h-12zm58 0h22v22h-12v-10h-10zm-58 58h12v10h10v12h-22zm68 0h12v22h-22v-12h10z" fill="url(#accent)" />
+
+    <rect x="0" y="0" width="348" height="390" rx="38" fill="none" stroke="#85e4db" stroke-width="4" opacity="0.9" />
+    <path d="M56 0v390M112 0v390M168 0v390M224 0v390M280 0v390" stroke="#123149" opacity="0.3" />
+    <path d="M0 68h348M0 136h348M0 204h348M0 272h348M0 340h348" stroke="#123149" opacity="0.3" />
+
+    <g transform="translate(-108 158)">
+      <rect x="0" y="138" width="188" height="140" rx="26" fill="#0d2030" stroke="#2f6f8f" stroke-width="3" />
+      <path d="M24 136 94 84l70 52v110H24Z" fill="#153750" />
+      <path d="M48 146V98h92v48" fill="#0e2435" />
+      <path d="M82 190h24v88H82Z" fill="#4fd1c5" opacity="0.9" />
+      <path d="M44 172h24v24H44zm76 0h24v24h-24zm0 42h24v24h-24zm-76 42h24v24H44z" fill="#9bd6ff" opacity="0.95" />
+    </g>
+  </g>
+
+  <text x="92" y="824" fill="#89a9bf" font-family="Segoe UI, Arial, sans-serif" font-size="24">
+    Live workflow for bookings, approvals, payments, and QR scan confirmation
+  </text>
+</svg>

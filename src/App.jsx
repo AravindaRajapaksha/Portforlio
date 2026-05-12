@@ -1,16 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.css";
 
-const projects = [
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
 
+const projects = [
+  {
+    title: "Hostel Registration System",
+    desc: "A React-based hostel booking platform with approvals, payments, and QR-powered access tracking.",
+    longDesc: "A full hostel registration workflow built with React and Vite, backed by Supabase. Students can submit booking requests, staff can handle academic and warden approvals, payments are tracked in the system, and QR generation plus QR scan history help support hostel access and confirmation flows with an ESP32-CAM scanner.",
+    tags: ["React", "Supabase", "ESP32-CAM"],
+    img: publicAsset("projects/hostel1.png?v=2"),
+    images: [
+      publicAsset("projects/hostel1.png?v=2"),
+      publicAsset("projects/hostel2.png"),
+      publicAsset("projects/hostel3.png"),
+      publicAsset("projects/hostel4.png"),
+    ],
+    github: "https://github.com/AravindaRajapaksha/HostelRegistrationSystem",
+    live: "https://hostel-registration-system.vercel.app",
+  },
+  {
+    title: "RestoBite - Restaurant Ordering System",
+    desc: "A Supabase-backed restaurant ordering app with customer auth, live checkout, and admin controls.",
+    longDesc: "RestoBite is a React and Vite restaurant ordering platform powered by Supabase. It includes customer signup and login, Google authentication, password reset, menu browsing, cart and checkout flows, customer profile management with order history, and admin-facing tools for menu management plus live order and revenue tracking.",
+    tags: ["React", "Supabase", "React Router"],
+    img: publicAsset("projects/restaurant_home.png"),
+    images: [
+      publicAsset("projects/restaurant_home.png"),
+      publicAsset("projects/restaurant_shop.png"),
+      publicAsset("projects/restaurant_login.png"),
+      publicAsset("projects/restaurant_admin_login.png"),
+    ],
+    github: "https://github.com/AravindaRajapaksha/RestaurantSystem",
+    live: "https://restaurantsystem-one.vercel.app/shop",
+  },
 
   {
     title: "QR Code Generator",
     desc: "Python tool that generates customizable QR codes from any URL or text input.",
     longDesc: "A complete Python-based QR code generation utility. It allows users to input URLs, text, or contact information and generates a high-quality SVG or PNG image. The tool supports custom colors, sizes, and error correction levels.",
     tags: ["Python", "qrcode", "PIL"],
-    img: "/projects/qr_generator.png",
-    images: ["/projects/qr_generator.png"], // Add more image paths here as you upload them
+    img: publicAsset("projects/qr_generator.png"),
+    images: [publicAsset("projects/qr_generator.png")], // Add more image paths here as you upload them
     github: "https://github.com/AravindaRajapaksha/QR-Code-generator",
     live: "#",
   },
@@ -19,8 +50,8 @@ const projects = [
     desc: "Real-time factory machine monitoring dashboard with live charts.",
     longDesc: "This group project is a real-time dashboard designed for factory supervisors. It monitors machine health, uptime, and output using sensors. Data is streamed via Firebase and visualized with interactive charts to help predict maintenance needs.",
     tags: ["Vue.js", "Firebase", "Chart.js"],
-    img: "/projects/FactoryMachineMonitoringSystem.png",
-    images: ["/projects/FactoryMachineMonitoringSystem.png"], // Add more image paths here as you upload them
+    img: publicAsset("projects/FactoryMachineMonitoringSystem.png"),
+    images: [publicAsset("projects/FactoryMachineMonitoringSystem.png")], // Add more image paths here as you upload them
     github: "https://github.com/Group-Project-Ousl/factory-machine-monitoring-system",
     live: "#",
   },
@@ -29,8 +60,8 @@ const projects = [
     desc: "A sleek, functional calculator built with Python's Tkinter.",
     longDesc: "A simple yet powerful calculator application built using Python and the Tkinter library. It features a modern UI design inspired by Figma, supporting basic arithmetic operations with an emphasis on clean code and user experience.",
     tags: ["Python", "Tkinter", "UI/UX"],
-    img: "/projects/Calculator.png",
-    images: ["/projects/Calculator.png"],
+    img: publicAsset("projects/Calculator.png"),
+    images: [publicAsset("projects/Calculator.png")],
     github: "https://github.com/AravindaRajapaksha/Calculator",
     live: "#",
   },
@@ -39,8 +70,8 @@ const projects = [
     desc: "A high-fidelity UI/UX design for an electronic components store.",
     longDesc: "ElectroStore is a modern, dark-themed e-commerce platform designed for electronic components. The design includes a full workflow from landing page to product catalog, featuring high-quality component imagery, advanced sidebar filters, and a sleek tech-focused aesthetic. Built with a focus on professional engineers and hobbyists.",
     tags: ["Figma", "UI/UX", "E-commerce"],
-    img: "/projects/ElectroStore.png",
-    images: ["/projects/ElectroStore.png"],
+    img: publicAsset("projects/ElectroStore.png"),
+    images: [publicAsset("projects/ElectroStore.png")],
     github: "#",
     live: "https://www.figma.com/design/SjYkCfRrejIai2wvLxwoFw/Untitled?node-id=0-1&p=f&t=AkWwdidIOEYvvFRX-0",
   },
@@ -58,7 +89,7 @@ const profileData = {
   bio: "Software Engineering undergraduate at OUSL. I’m seeking an internship/training opportunity to apply and grow my skills in web/backend development.",
   aboutName: "I'm Shehan Aravinda",
   // Use the image found in public folder
-  imgSrc: "/Profile.png",
+  imgSrc: publicAsset("Profile.png"),
 };
 
 function Pill({ children }) {
@@ -94,8 +125,11 @@ function Reveal({ children, direction = "bottom", delay = 0 }) {
 
 function Card({ item, index, onView }) {
   const slideDir = index % 2 === 0 ? "left" : "right";
-  const hasMultipleImages = item.images && item.images.length > 0;
-  const images = hasMultipleImages ? item.images : (item.img ? [item.img] : []);
+  const cardImages = item.cardImages && item.cardImages.length > 0
+    ? item.cardImages
+    : (item.img ? [item.img] : (item.images || []));
+  const showCollage = item.cardLayout === "collage" && cardImages.length > 1;
+  const hasMultipleImages = !showCollage && cardImages.length > 1;
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
@@ -103,22 +137,37 @@ function Card({ item, index, onView }) {
     if (!hasMultipleImages) return;
 
     const interval = setInterval(() => {
-      setCurrentImgIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentImgIndex((prevIndex) => (prevIndex + 1) % cardImages.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, images.length]);
+  }, [cardImages.length, hasMultipleImages]);
 
   return (
     <Reveal direction={slideDir}>
       <article className="card">
-        {images.length > 0 && (
+        {showCollage && (
+          <div className="cardImgWrap">
+            <div className="cardCollage">
+              {cardImages.slice(0, 4).map((imgSrc, imgIndex) => (
+                <img
+                  key={imgIndex}
+                  src={imgSrc}
+                  alt={`${item.title} preview ${imgIndex + 1}`}
+                  className="cardImg collageImg"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!showCollage && cardImages.length > 0 && (
           <div className="cardImgWrap">
             <div
               className="cardSlider"
               style={{ transform: `translateX(-${currentImgIndex * 100}%)`, transition: "transform 0.5s ease" }}
             >
-              {images.map((imgSrc, imgIndex) => (
+              {cardImages.map((imgSrc, imgIndex) => (
                 <img
                   key={imgIndex}
                   src={imgSrc}
@@ -154,6 +203,120 @@ function Card({ item, index, onView }) {
           </button>
         </div>
       </article>
+    </Reveal>
+  );
+}
+
+function ProjectShowcase({ items, onView }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (items.length <= 1 || isPaused) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % items.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isPaused, items.length]);
+
+  if (!items.length) return null;
+
+  const activeProject = items[activeIndex];
+
+  const showPrevious = () => {
+    setActiveIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+  };
+
+  const showNext = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % items.length);
+  };
+
+  return (
+    <Reveal direction="bottom">
+      <div
+        className="showcase"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="showcaseMedia">
+          {items.map((item, index) => {
+            const slideImages = item.images && item.images.length > 0 ? item.images : (item.img ? [item.img] : []);
+            const slideImage = slideImages[0];
+
+            return (
+              <img
+                key={item.title}
+                src={slideImage}
+                alt={item.title}
+                className={`showcaseImg ${index === activeIndex ? "active" : ""}`}
+              />
+            );
+          })}
+
+          <div className="showcaseShade" />
+
+          <div className="showcaseControls">
+            <button className="showcaseArrow" type="button" onClick={showPrevious} aria-label="Previous project">
+              ‹
+            </button>
+            <button className="showcaseArrow" type="button" onClick={showNext} aria-label="Next project">
+              ›
+            </button>
+          </div>
+        </div>
+
+        <div className="showcasePanel">
+          <div>
+            <div className="showcaseMeta">
+              <span className="showcaseLabel">Project Gallery</span>
+              <span className="showcaseCount">
+                {String(activeIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <h3 className="showcaseTitle">{activeProject.title}</h3>
+            <p className="showcaseDesc">{activeProject.longDesc || activeProject.desc}</p>
+
+            <div className="cardTags">
+              {activeProject.tags.map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="showcaseDots" role="tablist" aria-label="Project slides">
+              {items.map((item, index) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  className={`showcaseDot ${index === activeIndex ? "active" : ""}`}
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={`Show ${item.title}`}
+                />
+              ))}
+            </div>
+
+            <div className="showcaseActions">
+              <button className="btn primary" type="button" onClick={() => onView(activeProject)}>
+                View Project
+              </button>
+              <a className="btn ghost" href={activeProject.github || "#"} target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+              {activeProject.live && activeProject.live !== "#" && (
+                <a className="btn ghost" href={activeProject.live} target="_blank" rel="noreferrer">
+                  Live Demo
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </Reveal>
   );
 }
@@ -459,6 +622,13 @@ export default function App() {
               </div>
             </div>
           </Reveal>
+        </section>
+
+        <section className="section">
+          <Reveal direction="bottom">
+            <h3 className="sectionTitle">Project Gallery</h3>
+          </Reveal>
+          <ProjectShowcase items={projects} onView={setSelectedProject} />
         </section>
 
         <section className="section" id="projects">
