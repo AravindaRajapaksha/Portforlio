@@ -86,7 +86,7 @@ const profileData = {
   subtitle: "Software Engineering Undergraduate | Backend & Web Developer",
   description: "Building clean web apps using Python, Django, and modern web technologies.",
   bio_title: "I’m a Software Engineer.",
-  bio: "Software Engineering undergraduate at OUSL. I’m seeking an internship/training opportunity to apply and grow my skills in web/backend development.",
+  bio: "Software Engineering undergraduate at OUSL with a strong focus on web and backend development.",
   aboutName: "I'm Shehan Aravinda",
   // Use the image found in public folder
   imgSrc: publicAsset("Profile.png"),
@@ -566,8 +566,7 @@ export default function App() {
                 </h2>
 
                 <p className="muted">
-                  Currently, I’m a Software Engineering undergraduate at OUSL. I’m seeking an
-                  internship/training opportunity to apply and grow my skills in web/backend development.
+                  Currently, I'm a Software Engineering undergraduate at OUSL with a strong focus on web and backend development.
                 </p>
 
                 <div className="btnRow">
