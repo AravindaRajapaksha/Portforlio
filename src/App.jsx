@@ -34,6 +34,38 @@ const projects = [
     github: "https://github.com/AravindaRajapaksha/RestaurantSystem",
     live: "https://restaurantsystem-one.vercel.app/shop",
   },
+  {
+    title: "NuraNova Solutions Website",
+    desc: "A modern digital agency website with a bold hero section, service highlights, and a polished contact experience.",
+    longDesc: "A group project created for NuraNova Solutions to present the brand through a clean multi-section website. The experience includes a strong landing page, service cards for software and creative offerings, dark-mode-friendly styling, and a contact section that makes it easy for visitors to reach out.",
+    tags: ["React", "Responsive UI", "Web Design"],
+    img: publicAsset("projects/nuranova2.png"),
+    cardLayout: "collage",
+    cardImages: [
+      publicAsset("projects/nuranova2.png"),
+      publicAsset("projects/nuranova3.png"),
+      publicAsset("projects/nuranova4.png"),
+      publicAsset("projects/nuranova1.png"),
+    ],
+    images: [
+      publicAsset("projects/nuranova2.png"),
+      publicAsset("projects/nuranova3.png"),
+      publicAsset("projects/nuranova4.png"),
+      publicAsset("projects/nuranova1.png"),
+    ],
+    github: "#",
+    live: "https://nuranova.vercel.app/",
+  },
+  {
+    title: "School Management System",
+    desc: "A school operations dashboard focused on alerts, communication, and daily academic updates.",
+    longDesc: "A school management platform designed to make academic administration and communication easier for schools, teachers, students, and parents. The interface highlights important notifications such as attendance alerts, parent meeting reminders, and exam timetable updates in a clean, modern dashboard experience.",
+    tags: ["React", "Dashboard UI", "Education"],
+    img: publicAsset("projects/school4.png"),
+    images: [publicAsset("projects/school4.png")],
+    github: "#",
+    live: "#",
+  },
 
   {
     title: "QR Code Generator",
@@ -125,6 +157,7 @@ function Reveal({ children, direction = "bottom", delay = 0 }) {
 
 function Card({ item, index, onView }) {
   const slideDir = index % 2 === 0 ? "left" : "right";
+  const hasGithub = item.github && item.github !== "#";
   const cardImages = item.cardImages && item.cardImages.length > 0
     ? item.cardImages
     : (item.img ? [item.img] : (item.images || []));
@@ -195,9 +228,11 @@ function Card({ item, index, onView }) {
         </div>
 
         <div className="cardActions">
-          <a className="miniBtn" href={item.github || "#"} target={item.github && item.github !== "#" ? "_blank" : undefined} rel="noreferrer">
-            GitHub
-          </a>
+          {hasGithub && (
+            <a className="miniBtn" href={item.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          )}
           <button className="miniBtn ghostMini" onClick={() => onView(item)}>
             View
           </button>
@@ -224,6 +259,8 @@ function ProjectShowcase({ items, onView }) {
   if (!items.length) return null;
 
   const activeProject = items[activeIndex];
+  const hasGithub = activeProject.github && activeProject.github !== "#";
+  const hasLive = activeProject.live && activeProject.live !== "#";
 
   const showPrevious = () => {
     setActiveIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
@@ -305,10 +342,12 @@ function ProjectShowcase({ items, onView }) {
               <button className="btn primary" type="button" onClick={() => onView(activeProject)}>
                 View Project
               </button>
-              <a className="btn ghost" href={activeProject.github || "#"} target="_blank" rel="noreferrer">
-                GitHub
-              </a>
-              {activeProject.live && activeProject.live !== "#" && (
+              {hasGithub && (
+                <a className="btn ghost" href={activeProject.github} target="_blank" rel="noreferrer">
+                  GitHub
+                </a>
+              )}
+              {hasLive && (
                 <a className="btn ghost" href={activeProject.live} target="_blank" rel="noreferrer">
                   Live Demo
                 </a>
@@ -324,6 +363,8 @@ function ProjectShowcase({ items, onView }) {
 function ProjectModal({ item, onClose }) {
   if (!item) return null;
 
+  const hasGithub = item.github && item.github !== "#";
+  const hasLive = item.live && item.live !== "#";
   const images = item.images && item.images.length > 0 ? item.images : (item.img ? [item.img] : []);
 
   return (
@@ -347,10 +388,12 @@ function ProjectModal({ item, onClose }) {
           <p className="modalDesc">{item.longDesc || item.desc}</p>
 
           <div className="modalActions">
-            <a className="btn primary" href={item.github || "#"} target="_blank" rel="noreferrer">
-              GitHub Repo
-            </a>
-            {item.live && item.live !== "#" && (
+            {hasGithub && (
+              <a className="btn primary" href={item.github} target="_blank" rel="noreferrer">
+                GitHub Repo
+              </a>
+            )}
+            {hasLive && (
               <a className="btn ghost" href={item.live} target="_blank" rel="noreferrer">
                 Live Demo
               </a>
