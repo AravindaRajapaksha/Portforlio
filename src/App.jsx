@@ -1,16 +1,78 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.css";
 
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 const projects = [
-
-
+  {
+    title: "Hostel Registration System",
+    desc: "A React-based hostel booking platform with approvals, payments, and QR-powered access tracking.",
+    longDesc: "A full hostel registration workflow built with React and Vite, backed by Supabase. Students can submit booking requests, staff can handle academic and warden approvals, payments are tracked in the system, and QR generation plus QR scan history help support hostel access and confirmation flows with an ESP32-CAM scanner.",
+    tags: ["React", "Supabase", "ESP32-CAM"],
+    img: publicAsset("projects/hostel1.png?v=2"),
+    images: [
+      publicAsset("projects/hostel1.png?v=2"),
+      publicAsset("projects/hostel2.png"),
+      publicAsset("projects/hostel3.png"),
+      publicAsset("projects/hostel4.png"),
+    ],
+    github: "https://github.com/AravindaRajapaksha/HostelRegistrationSystem",
+    live: "https://hostel-registration-system.vercel.app",
+  },
+  {
+    title: "RestoBite - Restaurant Ordering System",
+    desc: "A Supabase-backed restaurant ordering app with customer auth, live checkout, and admin controls.",
+    longDesc: "RestoBite is a React and Vite restaurant ordering platform powered by Supabase. It includes customer signup and login, Google authentication, password reset, menu browsing, cart and checkout flows, customer profile management with order history, and admin-facing tools for menu management plus live order and revenue tracking.",
+    tags: ["React", "Supabase", "React Router"],
+    img: publicAsset("projects/restaurant_home.png"),
+    images: [
+      publicAsset("projects/restaurant_home.png"),
+      publicAsset("projects/restaurant_shop.png"),
+      publicAsset("projects/restaurant_login.png"),
+      publicAsset("projects/restaurant_admin_login.png"),
+    ],
+    github: "https://github.com/AravindaRajapaksha/RestaurantSystem",
+    live: "https://restaurantsystem-one.vercel.app/shop",
+  },
+  {
+    title: "NuraNova Solutions Website",
+    desc: "A modern digital agency website with a bold hero section, service highlights, and a polished contact experience.",
+    longDesc: "A group project created for NuraNova Solutions to present the brand through a clean multi-section website. The experience includes a strong landing page, service cards for software and creative offerings, dark-mode-friendly styling, and a contact section that makes it easy for visitors to reach out.",
+    tags: ["React", "Responsive UI", "Web Design"],
+    img: publicAsset("projects/nuranova2.png"),
+    cardLayout: "collage",
+    cardImages: [
+      publicAsset("projects/nuranova2.png"),
+      publicAsset("projects/nuranova3.png"),
+      publicAsset("projects/nuranova4.png"),
+      publicAsset("projects/nuranova1.png"),
+    ],
+    images: [
+      publicAsset("projects/nuranova2.png"),
+      publicAsset("projects/nuranova3.png"),
+      publicAsset("projects/nuranova4.png"),
+      publicAsset("projects/nuranova1.png"),
+    ],
+    github: "#",
+    live: "https://nuranova.vercel.app/",
+  },
+  {
+    title: "School Management System",
+    desc: "A school operations dashboard focused on alerts, communication, and daily academic updates.",
+    longDesc: "A school management platform designed to make academic administration and communication easier for schools, teachers, students, and parents. The interface highlights important notifications such as attendance alerts, parent meeting reminders, and exam timetable updates in a clean, modern dashboard experience.",
+    tags: ["React", "Dashboard UI", "Education"],
+    img: publicAsset("projects/school4.png"),
+    images: [publicAsset("projects/school4.png")],
+    github: "#",
+    live: "#",
+  },
   {
     title: "QR Code Generator",
     desc: "Python tool that generates customizable QR codes from any URL or text input.",
     longDesc: "A complete Python-based QR code generation utility. It allows users to input URLs, text, or contact information and generates a high-quality SVG or PNG image. The tool supports custom colors, sizes, and error correction levels.",
     tags: ["Python", "qrcode", "PIL"],
-    img: "/projects/qr_generator.png",
-    images: ["/projects/qr_generator.png"], // Add more image paths here as you upload them
+    img: publicAsset("projects/qr_generator.png"),
+    images: [publicAsset("projects/qr_generator.png")],
     github: "https://github.com/AravindaRajapaksha/QR-Code-generator",
     live: "#",
   },
@@ -19,8 +81,8 @@ const projects = [
     desc: "Real-time factory machine monitoring dashboard with live charts.",
     longDesc: "This group project is a real-time dashboard designed for factory supervisors. It monitors machine health, uptime, and output using sensors. Data is streamed via Firebase and visualized with interactive charts to help predict maintenance needs.",
     tags: ["Vue.js", "Firebase", "Chart.js"],
-    img: "/projects/FactoryMachineMonitoringSystem.png",
-    images: ["/projects/FactoryMachineMonitoringSystem.png"], // Add more image paths here as you upload them
+    img: publicAsset("projects/FactoryMachineMonitoringSystem.png"),
+    images: [publicAsset("projects/FactoryMachineMonitoringSystem.png")],
     github: "https://github.com/Group-Project-Ousl/factory-machine-monitoring-system",
     live: "#",
   },
@@ -29,8 +91,8 @@ const projects = [
     desc: "A sleek, functional calculator built with Python's Tkinter.",
     longDesc: "A simple yet powerful calculator application built using Python and the Tkinter library. It features a modern UI design inspired by Figma, supporting basic arithmetic operations with an emphasis on clean code and user experience.",
     tags: ["Python", "Tkinter", "UI/UX"],
-    img: "/projects/Calculator.png",
-    images: ["/projects/Calculator.png"],
+    img: publicAsset("projects/Calculator.png"),
+    images: [publicAsset("projects/Calculator.png")],
     github: "https://github.com/AravindaRajapaksha/Calculator",
     live: "#",
   },
@@ -39,8 +101,8 @@ const projects = [
     desc: "A high-fidelity UI/UX design for an electronic components store.",
     longDesc: "ElectroStore is a modern, dark-themed e-commerce platform designed for electronic components. The design includes a full workflow from landing page to product catalog, featuring high-quality component imagery, advanced sidebar filters, and a sleek tech-focused aesthetic. Built with a focus on professional engineers and hobbyists.",
     tags: ["Figma", "UI/UX", "E-commerce"],
-    img: "/projects/ElectroStore.png",
-    images: ["/projects/ElectroStore.png"],
+    img: publicAsset("projects/ElectroStore.png"),
+    images: [publicAsset("projects/ElectroStore.png")],
     github: "#",
     live: "https://www.figma.com/design/SjYkCfRrejIai2wvLxwoFw/Untitled?node-id=0-1&p=f&t=AkWwdidIOEYvvFRX-0",
   },
@@ -55,14 +117,14 @@ const profileData = {
   subtitle: "Software Engineering Undergraduate | Backend & Web Developer",
   description: "Building clean web apps using Python, Django, and modern web technologies.",
   bio_title: "I’m a Software Engineer.",
-  bio: "Software Engineering undergraduate at OUSL. I’m seeking an internship/training opportunity to apply and grow my skills in web/backend development.",
+  bio: "Software Engineering undergraduate at OUSL with a strong focus on web and backend development.",
   aboutName: "I'm Shehan Aravinda",
   // Use the image found in public folder
-  imgSrc: "/Profile.png",
+  imgSrc: publicAsset("Profile.png"),
 };
 
 const cvData = {
-  href: "/Shehan%20Aravinda.pdf",
+  href: publicAsset("Shehan%20Aravinda.pdf"),
   fileName: "Shehan Aravinda.pdf",
 };
 
@@ -107,8 +169,11 @@ function getEmbedUrl(url) {
 
 function Card({ item, index, onView }) {
   const slideDir = index % 2 === 0 ? "left" : "right";
-  const hasMultipleImages = item.images && item.images.length > 0;
-  const images = hasMultipleImages ? item.images : (item.img ? [item.img] : []);
+  const cardImages = item.cardImages && item.cardImages.length > 0
+    ? item.cardImages
+    : (item.img ? [item.img] : (item.images || []));
+  const showCollage = item.cardLayout === "collage" && cardImages.length > 1;
+  const hasMultipleImages = !showCollage && cardImages.length > 1;
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
@@ -116,22 +181,37 @@ function Card({ item, index, onView }) {
     if (!hasMultipleImages) return;
 
     const interval = setInterval(() => {
-      setCurrentImgIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentImgIndex((prevIndex) => (prevIndex + 1) % cardImages.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, images.length]);
+  }, [hasMultipleImages, cardImages.length]);
 
   return (
     <Reveal direction={slideDir}>
       <article className="card">
-        {images.length > 0 && (
+        {showCollage && (
+          <div className="cardImgWrap" onClick={() => onView(item, "preview")} style={{ cursor: "pointer" }}>
+            <div className="cardCollage">
+              {cardImages.slice(0, 4).map((imgSrc, imgIndex) => (
+                <img
+                  key={imgIndex}
+                  src={imgSrc}
+                  alt={`${item.title} preview ${imgIndex + 1}`}
+                  className="cardImg collageImg"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!showCollage && cardImages.length > 0 && (
           <div className="cardImgWrap" onClick={() => onView(item, "preview")} style={{ cursor: "pointer" }}>
             <div
               className="cardSlider"
               style={{ transform: `translateX(-${currentImgIndex * 100}%)`, transition: "transform 0.5s ease" }}
             >
-              {images.map((imgSrc, imgIndex) => (
+              {cardImages.map((imgSrc, imgIndex) => (
                 <img
                   key={imgIndex}
                   src={imgSrc}
