@@ -1450,30 +1450,67 @@ body {
   height: 100%;
 }
 
-.contactSubmitBtn {
+.contactFormActions {
+  display: flex;
+  gap: 12px;
   margin-top: auto;
-  width: 100%;
-  padding: 14px 20px;
+  padding-top: 4px;
+}
+
+.contactSubmitBtn {
+  flex: 1.25;
+  padding: 13px 18px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-  color: #090514;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
   font-family: inherit;
-  font-size: 14.5px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 9px;
   cursor: pointer;
-  box-shadow: 0 16px 40px rgba(180, 124, 255, 0.24);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .contactSubmitBtn:hover {
   transform: translateY(-2px);
-  filter: brightness(1.05);
-  box-shadow: 0 20px 48px rgba(180, 124, 255, 0.34);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 36px rgba(37, 211, 102, 0.42);
+}
+
+.contactSecondaryBtn {
+  flex: 1;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contactSecondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(180, 124, 255, 0.45);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 540px) {
+  .contactFormActions {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 860px) {
