@@ -802,12 +802,15 @@ export default function App() {
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
             <button type="button" className="navLinkBtn" onClick={openCvModal}>
-              My CV
+              Preview CV
             </button>
+            <a className="navDownloadPill" href={cvData.href} download={cvData.fileName}>
+              Download CV
+            </a>
           </nav>
 
           <div className="navRight">
-            <a className="iconPill" href="https://github.com/" target="_blank" rel="noreferrer">
+            <a className="iconPill" href="https://github.com/AravindaRajapaksha" target="_blank" rel="noreferrer">
               GH
             </a>
             <a className="iconPill" href="https://linkedin.com/" target="_blank" rel="noreferrer">
@@ -826,8 +829,16 @@ export default function App() {
         </div>
 
         <div className={`mobileMenu ${mobileOpen ? "open" : ""}`}>
+          <a
+            href={cvData.href}
+            download={cvData.fileName}
+            className="mobileMenuBtn"
+            onClick={() => setMobileOpen(false)}
+          >
+            📥 Download CV
+          </a>
           <button type="button" className="mobileMenuBtn" onClick={openCvModal}>
-            My CV
+            📄 Preview CV
           </button>
           <a href="#home" onClick={() => setMobileOpen(false)}>
             🏠 Home
@@ -893,10 +904,18 @@ export default function App() {
                 </p>
 
                 <div className="btnRow">
-                  <button type="button" className="btn primary" onClick={openCvModal}>
-                    My CV
+                  <a className="btn primary" href={cvData.href} download={cvData.fileName}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "7px" }}>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download CV
+                  </a>
+                  <button type="button" className="btn ghost" onClick={openCvModal}>
+                    Preview CV
                   </button>
-                  <a className="btn ghost" href="#about">
+                  <a className="btn ghost" href="#projects">
                     See Work
                   </a>
                   <a className="btn ghost" href="#contact">
@@ -944,6 +963,20 @@ export default function App() {
                 <Pill>Android Studio</Pill>
                 <Pill>Postman</Pill>
                 <Pill>Git</Pill>
+              </div>
+
+              <div className="btnRow" style={{ marginTop: "1.6rem", marginBottom: 0 }}>
+                <a className="btn primary" href={cvData.href} download={cvData.fileName}>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "7px" }}>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Download CV
+                </a>
+                <button type="button" className="btn ghost" onClick={openCvModal}>
+                  Preview CV
+                </button>
               </div>
             </div>
           </Reveal>
@@ -1030,13 +1063,24 @@ export default function App() {
                     <p className="contactProfileRole">Software Engineering Undergraduate</p>
                     <span className="contactProfileLoc">📍 Sri Lanka • Open to Internship</span>
                   </div>
-                  <button
-                    type="button"
-                    className="contactCvMiniBtn"
-                    onClick={openCvModal}
-                  >
-                    My CV
-                  </button>
+                  <div className="contactCvBtnGroup">
+                    <a
+                      className="contactCvMiniBtn"
+                      href={cvData.href}
+                      download={cvData.fileName}
+                      title="Download CV"
+                    >
+                      Download CV
+                    </a>
+                    <button
+                      type="button"
+                      className="contactCvMiniBtn ghost"
+                      onClick={openCvModal}
+                      title="Preview CV"
+                    >
+                      Preview
+                    </button>
+                  </div>
                 </div>
               </Reveal>
 

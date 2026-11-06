@@ -185,6 +185,27 @@ body {
   background: rgba(255, 255, 255, .05);
 }
 
+.navDownloadPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, rgba(180, 124, 255, 0.22), rgba(110, 231, 255, 0.16)) !important;
+  border: 1px solid rgba(180, 124, 255, 0.35) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  transition: all 0.2s ease !important;
+}
+
+.navDownloadPill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(110, 231, 255, 0.6) !important;
+  background: linear-gradient(135deg, rgba(180, 124, 255, 0.35), rgba(110, 231, 255, 0.25)) !important;
+  box-shadow: 0 4px 16px rgba(180, 124, 255, 0.25);
+}
+
 .navRight {
   display: flex;
   gap: 10px;
@@ -1107,13 +1128,24 @@ body {
   font-weight: 600;
 }
 
+.contactCvBtnGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
 .contactCvMiniBtn {
-  padding: 8px 14px;
-  border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border-radius: 10px;
   border: 1px solid rgba(180, 124, 255, 0.35);
   background: linear-gradient(135deg, rgba(180, 124, 255, 0.2), rgba(110, 231, 255, 0.14));
   color: #ffffff;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -1125,6 +1157,18 @@ body {
   transform: translateY(-1px);
   border-color: rgba(110, 231, 255, 0.6);
   background: linear-gradient(135deg, rgba(180, 124, 255, 0.32), rgba(110, 231, 255, 0.24));
+}
+
+.contactCvMiniBtn.ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.contactCvMiniBtn.ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
 
 .directContactStack {
