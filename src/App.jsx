@@ -912,17 +912,6 @@ export default function App() {
           </Reveal>
         </section>
 
-        <section className="section" id="projects">
-          <Reveal direction="bottom">
-            <h3 className="sectionTitle">Projects</h3>
-          </Reveal>
-          <div className="grid">
-            {projects.map((p, i) => (
-              <Card key={p.title} item={p} index={i} onView={openProjectModal} />
-            ))}
-          </div>
-        </section>
-
         <section className="section projectGallerySection" id="project-gallery">
           <Reveal direction="bottom">
             <h3 className="sectionTitle gallerySectionTitle">Project Gallery</h3>
@@ -945,6 +934,17 @@ export default function App() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="section" id="projects">
+          <Reveal direction="bottom">
+            <h3 className="sectionTitle">Projects</h3>
+          </Reveal>
+          <div className="grid">
+            {projects.map((p, i) => (
+              <Card key={p.title} item={p} index={i} onView={openProjectModal} />
+            ))}
           </div>
         </section>
 
