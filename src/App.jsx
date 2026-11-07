@@ -786,6 +786,7 @@ export default function App() {
         <div className="glow g1" />
         <div className="glow g2" />
         <div className="glow g3" />
+        <div className="glow g4" />
         <div className="noise" />
       </div>
 

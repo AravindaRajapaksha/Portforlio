@@ -24,7 +24,13 @@ body,
 body {
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background: linear-gradient(180deg, #070913 0%, #0a0e1c 50%, #0d0a20 100%);
+  background:
+    radial-gradient(1200px 750px at 50% 0%, rgba(124, 58, 237, 0.32), transparent 75%),
+    radial-gradient(950px 650px at 85% 25%, rgba(30, 64, 140, 0.3), transparent 70%),
+    radial-gradient(1100px 750px at 15% 55%, rgba(147, 51, 234, 0.28), transparent 72%),
+    radial-gradient(1200px 850px at 50% 88%, rgba(109, 40, 217, 0.34), transparent 75%),
+    linear-gradient(180deg, #0c071a 0%, #080d1e 30%, #0f0826 60%, #070918 85%, #0d0620 100%);
+  background-attachment: fixed;
   color: var(--text);
   overflow-x: hidden;
   width: 100%;
@@ -55,33 +61,40 @@ body {
 
 .glow {
   position: absolute;
-  width: 650px;
-  height: 650px;
+  width: 750px;
+  height: 750px;
   border-radius: 999px;
-  filter: blur(90px);
-  opacity: .45;
+  filter: blur(95px);
+  opacity: .62;
 }
 
 .g1 {
-  left: calc(-220px + var(--mouse-x, 0) * 25px);
-  top: calc(-240px + var(--mouse-y, 0) * 25px);
-  background: radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.35), transparent 60%);
+  left: calc(-200px + var(--mouse-x, 0) * 25px);
+  top: calc(-220px + var(--mouse-y, 0) * 25px);
+  background: radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.65), rgba(126, 34, 206, 0.25) 55%, transparent 72%);
   animation: blob-bounce 14s infinite alternate ease-in-out;
 }
 
 .g2 {
-  right: calc(-240px - var(--mouse-x, 0) * 25px);
-  top: calc(120px + var(--mouse-y, 0) * 25px);
-  /* Toned down blue: soft midnight oceanic haze instead of bright neon cyan */
-  background: radial-gradient(circle at 30% 30%, rgba(35, 75, 115, 0.25), transparent 62%);
+  right: calc(-220px - var(--mouse-x, 0) * 25px);
+  top: calc(140px + var(--mouse-y, 0) * 25px);
+  /* Balanced deep oceanic blue instead of harsh neon */
+  background: radial-gradient(circle at 40% 40%, rgba(56, 130, 220, 0.48), rgba(30, 58, 138, 0.24) 55%, transparent 72%);
   animation: blob-bounce 16s infinite alternate-reverse ease-in-out;
 }
 
 .g3 {
-  left: calc(35% + var(--mouse-x, 0) * 25px);
-  bottom: calc(-360px - var(--mouse-y, 0) * 25px);
-  background: radial-gradient(circle at 30% 30%, rgba(92, 38, 145, 0.32), transparent 62%);
+  left: calc(30% + var(--mouse-x, 0) * 25px);
+  bottom: calc(-300px - var(--mouse-y, 0) * 25px);
+  background: radial-gradient(circle at 45% 45%, rgba(147, 51, 234, 0.65), rgba(88, 28, 135, 0.3) 55%, transparent 72%);
   animation: blob-bounce 18s infinite alternate ease-in-out;
+}
+
+.g4 {
+  left: calc(10% - var(--mouse-x, 0) * 20px);
+  top: calc(45% + var(--mouse-y, 0) * 20px);
+  background: radial-gradient(circle at 40% 40%, rgba(124, 58, 237, 0.5), rgba(76, 29, 149, 0.2) 55%, transparent 72%);
+  animation: blob-bounce 20s infinite alternate ease-in-out;
 }
 
 @keyframes blob-bounce {
@@ -564,7 +577,22 @@ body {
 
 /* ABOUT ME SECTION */
 .aboutSection {
+  position: relative;
   padding: 50px 0;
+}
+
+.aboutSection::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.25), rgba(30, 58, 138, 0.16) 55%, transparent 75%);
+  filter: blur(75px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .aboutContainer {
@@ -783,8 +811,23 @@ body {
 
 /* PROJECT GALLERY MARQUEE */
 .projectGallerySection {
+  position: relative;
   overflow: visible;
-  padding: 24px 0 12px;
+  padding: 30px 0 16px;
+}
+
+.projectGallerySection::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1100px;
+  height: 380px;
+  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.35), rgba(79, 70, 229, 0.16) 45%, transparent 75%);
+  filter: blur(65px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .gallerySectionTitle {
@@ -971,6 +1014,24 @@ body {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.22);
   transform: translateY(-1px);
+}
+
+#projects {
+  position: relative;
+}
+
+#projects::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.24), rgba(59, 130, 246, 0.14) 50%, transparent 75%);
+  filter: blur(85px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .grid {
@@ -1306,8 +1367,23 @@ body {
 
 /* CONTACT */
 .contactSection {
+  position: relative;
   padding-top: 56px;
   padding-bottom: 56px;
+}
+
+.contactSection::before {
+  content: "";
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1100px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.28), rgba(56, 130, 220, 0.15) 50%, transparent 75%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .contactHeader {
