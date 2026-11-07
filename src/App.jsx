@@ -942,41 +942,74 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="about">
+        <section className="section aboutSection" id="about">
           <Reveal direction="bottom">
-            <h3 className="sectionTitle">About Me</h3>
-          </Reveal>
-          <Reveal direction="bottom" delay={100}>
-            <div className="aboutCard">
-              <h2 className="aboutName">{profileData.aboutName}</h2>
-              <p className="muted">
-                {profileData.bio}
-              </p>
-              <div className="chips" style={{ marginTop: "1.2rem" }}>
-                <Pill>Python</Pill>
-                <Pill>Django</Pill>
-                <Pill>React</Pill>
-                <Pill>JavaScript</Pill>
-                <Pill>HTML</Pill>
-                <Pill>CSS</Pill>
-                <Pill>SQL</Pill>
-                <Pill>Android Studio</Pill>
-                <Pill>Postman</Pill>
-                <Pill>Git</Pill>
+            <div className="aboutContainer">
+              <div className="aboutMainCol">
+                <span className="aboutEyebrow">Who I Am</span>
+                <h2 className="aboutTitle">{profileData.aboutName}</h2>
+                <p className="aboutBio">
+                  Software Engineering undergraduate at OUSL with a strong focus on web and backend development. Passionate about building clean, efficient web applications using Python, modern frontend frameworks, and scalable cloud databases.
+                </p>
+
+                <div className="aboutHighlights">
+                  <div className="aboutHighlightItem">
+                    <span className="highlightIcon">🎓</span>
+                    <div>
+                      <strong>Degree</strong>
+                      <span>Bachelor of Software Engineering (UG) • OUSL</span>
+                    </div>
+                  </div>
+                  <div className="aboutHighlightItem">
+                    <span className="highlightIcon">📍</span>
+                    <div>
+                      <strong>Location</strong>
+                      <span>Sri Lanka</span>
+                    </div>
+                  </div>
+                  <div className="aboutHighlightItem">
+                    <span className="highlightIcon">💼</span>
+                    <div>
+                      <strong>Status</strong>
+                      <span>Available for Internship & Training</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="btnRow" style={{ marginTop: "1.6rem" }}>
+                  <a className="btn primary" href={cvData.href} download={cvData.fileName}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "7px" }}>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download CV
+                  </a>
+                  <button type="button" className="btn ghost" onClick={openCvModal}>
+                    Preview CV
+                  </button>
+                </div>
               </div>
 
-              <div className="btnRow" style={{ marginTop: "1.6rem", marginBottom: 0 }}>
-                <a className="btn primary" href={cvData.href} download={cvData.fileName}>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "7px" }}>
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  Download CV
-                </a>
-                <button type="button" className="btn ghost" onClick={openCvModal}>
-                  Preview CV
-                </button>
+              <div className="aboutSkillsCol">
+                <span className="aboutEyebrow">My Toolkit</span>
+                <h3 className="aboutSkillsHeading">Core Technologies & Tools</h3>
+                <p className="aboutSkillsSub">
+                  Tools, languages, and frameworks I use to develop modern software:
+                </p>
+
+                <div className="aboutSkillsGrid">
+                  <span className="aboutSkillTag"><span className="skillDot" />Python</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />Django</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />React</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />JavaScript</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />SQL</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />HTML5 / CSS3</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />Git & GitHub</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />Postman</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />Android Studio</span>
+                  <span className="aboutSkillTag"><span className="skillDot" />Figma</span>
+                </div>
               </div>
             </div>
           </Reveal>

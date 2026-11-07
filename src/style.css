@@ -443,24 +443,166 @@ body {
   font-size: 22px;
 }
 
-.aboutCard {
-  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
-  border: 1px solid rgba(255, 255, 255, .10);
-  border-radius: 18px;
-  padding: 20px 28px;
-  max-width: 720px;
-  box-shadow: 0 22px 70px rgba(0, 0, 0, .35);
+/* ABOUT ME SECTION */
+.aboutSection {
+  padding: 56px 0;
 }
 
-.aboutName {
-  font-size: clamp(24px, 4vw, 36px);
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+.aboutContainer {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.aboutMainCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutEyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 8px;
+}
+
+.aboutTitle {
+  font-size: clamp(28px, 4.5vw, 42px);
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.aboutBio {
+  margin: 0 0 24px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 620px;
+}
+
+.aboutHighlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.aboutHighlightItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.aboutHighlightItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(180, 124, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.highlightIcon {
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.aboutHighlightItem strong {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 2px;
+}
+
+.aboutHighlightItem span {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.aboutSkillsCol {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6px;
+}
+
+.aboutSkillsHeading {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.aboutSkillsSub {
+  margin: 0 0 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.aboutSkillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.aboutSkillTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.aboutSkillTag:hover {
+  background: rgba(180, 124, 255, 0.2);
+  border-color: rgba(180, 124, 255, 0.45);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.skillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
+  box-shadow: 0 0 8px var(--accent2);
+}
+
+@media (max-width: 860px) {
+  .aboutContainer {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 /* PROJECT GALLERY MARQUEE */
