@@ -116,7 +116,7 @@ body {
   transform: translateX(-50%);
   z-index: 50;
   width: calc(100% - 48px);
-  max-width: 860px;
+  max-width: 1040px;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   background: rgba(255, 255, 255, .07);
@@ -257,15 +257,15 @@ body {
 }
 
 .wrap {
-  max-width: 1100px;
+  max-width: 1380px;
   margin: 0 auto;
-  padding: 18px;
+  padding: 24px 36px;
 }
 
 /* HERO */
 .hero {
-  padding-top: 100px;
-  padding-bottom: 22px;
+  padding-top: 105px;
+  padding-bottom: 28px;
   scroll-margin-top: 100px;
 }
 
@@ -294,10 +294,18 @@ body {
 }
 
 .sub {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   color: var(--muted);
   line-height: 1.65;
-  max-width: 900px;
+  max-width: 100%;
+}
+
+.heroBio {
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 740px;
+  margin: 0 0 20px;
 }
 
 .bigLine {
@@ -319,7 +327,7 @@ body {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .btn {
@@ -327,7 +335,7 @@ body {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  padding: 12px 16px;
+  padding: 12px 18px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, .14);
   font-weight: 700;
@@ -376,25 +384,24 @@ body {
 /* PROFILE */
 .heroHeader {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 30px;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 48px;
   align-items: center;
-  padding-right: 40px;
+  padding-right: 0;
 }
 
-/* PROFILE */
 .avatarWrap {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  transform: translate(-100px, -45px);
-  /* Final shift left */
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transform: none;
 }
 
 .avatar {
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 240px;
   flex-shrink: 0;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -412,6 +419,53 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 999px;
+}
+
+.avatarBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.heroBadge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(180, 124, 255, 0.4);
+  background: rgba(180, 124, 255, 0.12);
+}
+
+.heroBadge.liveStatus {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  display: inline-block;
+  animation: pulseDot 2s infinite;
 }
 
 .avatarHint {
@@ -434,7 +488,7 @@ body {
 
 /* SECTIONS */
 .section {
-  padding: 44px 0;
+  padding: 40px 0;
   scroll-margin-top: 80px;
 }
 
@@ -445,12 +499,12 @@ body {
 
 /* ABOUT ME SECTION */
 .aboutSection {
-  padding: 56px 0;
+  padding: 50px 0;
 }
 
 .aboutContainer {
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
+  grid-template-columns: 1.05fr 0.95fr;
   gap: 48px;
   align-items: start;
 }
@@ -487,7 +541,7 @@ body {
   font-size: 15.5px;
   line-height: 1.75;
   color: var(--muted);
-  max-width: 620px;
+  max-width: 100%;
 }
 
 .aboutHighlights {
@@ -563,6 +617,31 @@ body {
   color: var(--muted);
 }
 
+.aboutSkillCategory {
+  margin-bottom: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.aboutSkillCategory:hover {
+  border-color: rgba(180, 124, 255, 0.25);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.aboutSkillCategoryTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
 .aboutSkillsGrid {
   display: flex;
   flex-wrap: wrap;
@@ -573,9 +652,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px;
+  padding: 8px 14px;
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -588,6 +667,36 @@ body {
   border-color: rgba(180, 124, 255, 0.45);
   color: #ffffff;
   transform: translateY(-2px);
+}
+
+.creativeTag {
+  border-color: rgba(236, 72, 153, 0.3) !important;
+  background: rgba(236, 72, 153, 0.08) !important;
+}
+
+.creativeTag:hover {
+  background: rgba(236, 72, 153, 0.22) !important;
+  border-color: rgba(236, 72, 153, 0.55) !important;
+}
+
+.skillDot.creative {
+  background: #ec4899 !important;
+  box-shadow: 0 0 8px #ec4899 !important;
+}
+
+.aiTag {
+  border-color: rgba(168, 85, 247, 0.32) !important;
+  background: rgba(168, 85, 247, 0.09) !important;
+}
+
+.aiTag:hover {
+  background: rgba(168, 85, 247, 0.24) !important;
+  border-color: rgba(168, 85, 247, 0.6) !important;
+}
+
+.skillDot.ai {
+  background: #a855f7 !important;
+  box-shadow: 0 0 8px #a855f7 !important;
 }
 
 .skillDot {
@@ -608,13 +717,14 @@ body {
 /* PROJECT GALLERY MARQUEE */
 .projectGallerySection {
   overflow: visible;
+  padding: 24px 0 12px;
 }
 
 .gallerySectionTitle {
   text-align: center;
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   color: #ffffff;
   letter-spacing: -0.01em;
 }
@@ -798,8 +908,8 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
 }
 
 /* CARD */
@@ -816,7 +926,7 @@ body {
 
 .cardImgWrap {
   width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
   border-radius: 18px 18px 0 0;
   position: relative;
@@ -1107,7 +1217,7 @@ body {
 
 .contactHeader {
   text-align: center;
-  max-width: 640px;
+  max-width: 760px;
   margin: 0 auto 42px;
 }
 
@@ -1166,8 +1276,8 @@ body {
 
 .contactShowcase {
   display: grid;
-  grid-template-columns: 1fr 1.08fr;
-  gap: 24px;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 32px;
   align-items: stretch;
 }
 

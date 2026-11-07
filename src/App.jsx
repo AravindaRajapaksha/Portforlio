@@ -874,33 +874,9 @@ export default function App() {
                   {profileData.subtitle} <br />
                   {profileData.description}
                 </p>
-              </div>
-            </Reveal>
 
-            <Reveal direction="right">
-              <div className="avatarWrap">
-                <div className="avatar">
-                  <img
-                    src={profileData.imgSrc}
-                    alt={profileData.name}
-                    className="avatarImg"
-                  />
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="heroRow">
-            {/* LEFT TEXT */}
-            <Reveal direction="left" delay={200}>
-              <div className="heroText">
-                <h2 className="bigLine">
-                  I’m a Software Engineer<span className="accent">.</span>
-                </h2>
-
-                <p className="muted">
-                  Currently, I’m a Software Engineering undergraduate at OUSL. I’m seeking an
-                  internship/training opportunity to apply and grow my skills in web/backend development.
+                <p className="muted heroBio">
+                  Software Engineering undergraduate at OUSL. Building clean web apps and backend systems using Python, Java, Django, and modern web frameworks — paired with Adobe Creative Suite and AI video prompting skills.
                 </p>
 
                 <div className="btnRow">
@@ -925,20 +901,37 @@ export default function App() {
 
                 <div className="chips">
                   <Pill>Python</Pill>
+                  <Pill>Java</Pill>
                   <Pill>Django</Pill>
                   <Pill>React</Pill>
                   <Pill>JavaScript</Pill>
-                  <Pill>HTML</Pill>
-                  <Pill>CSS</Pill>
                   <Pill>SQL</Pill>
-                  <Pill>Android Studio</Pill>
-                  <Pill>Postman</Pill>
+                  <Pill>Adobe Photoshop</Pill>
+                  <Pill>Adobe Premiere Pro</Pill>
+                  <Pill>Adobe Illustrator</Pill>
+                  <Pill>AI Video Creation</Pill>
+                  <Pill>Figma</Pill>
                   <Pill>Git</Pill>
                 </div>
               </div>
             </Reveal>
 
-            {/* RIGHT PROFILE (TOP ALIGNED) - MOVED TO TOP OF HERO */}
+            <Reveal direction="right">
+              <div className="avatarWrap">
+                <div className="avatar">
+                  <img
+                    src={profileData.imgSrc}
+                    alt={profileData.name}
+                    className="avatarImg"
+                  />
+                </div>
+                <div className="avatarBadges">
+                  <div className="heroBadge">🎓 OUSL Software Engineer</div>
+                  <div className="heroBadge">🎨 Adobe Suite & AI Video</div>
+                  <div className="heroBadge liveStatus"><span className="statusDot" />Open to Internship</div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -992,23 +985,52 @@ export default function App() {
               </div>
 
               <div className="aboutSkillsCol">
-                <span className="aboutEyebrow">My Toolkit</span>
-                <h3 className="aboutSkillsHeading">Core Technologies & Tools</h3>
+                <span className="aboutEyebrow">My Toolkit & Capabilities</span>
+                <h3 className="aboutSkillsHeading">Technologies & Creative Skills</h3>
                 <p className="aboutSkillsSub">
-                  Tools, languages, and frameworks I use to develop modern software:
+                  Proficient in software engineering, backend architectures, creative design suites, and AI content prompting:
                 </p>
 
-                <div className="aboutSkillsGrid">
-                  <span className="aboutSkillTag"><span className="skillDot" />Python</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />Django</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />React</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />JavaScript</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />SQL</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />HTML5 / CSS3</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />Git & GitHub</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />Postman</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />Android Studio</span>
-                  <span className="aboutSkillTag"><span className="skillDot" />Figma</span>
+                <div className="aboutSkillCategory">
+                  <div className="aboutSkillCategoryTitle">
+                    <span>💻</span> Software & Backend Engineering
+                  </div>
+                  <div className="aboutSkillsGrid">
+                    <span className="aboutSkillTag"><span className="skillDot" />Java</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />Python</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />Django</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />React</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />JavaScript</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />SQL</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />HTML5 / CSS3</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />Git & GitHub</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />Postman</span>
+                    <span className="aboutSkillTag"><span className="skillDot" />Android Studio</span>
+                  </div>
+                </div>
+
+                <div className="aboutSkillCategory">
+                  <div className="aboutSkillCategoryTitle">
+                    <span>🎨</span> Creative Design & Multimedia
+                  </div>
+                  <div className="aboutSkillsGrid">
+                    <span className="aboutSkillTag creativeTag"><span className="skillDot creative" />Adobe Photoshop</span>
+                    <span className="aboutSkillTag creativeTag"><span className="skillDot creative" />Adobe Premiere Pro</span>
+                    <span className="aboutSkillTag creativeTag"><span className="skillDot creative" />Adobe Illustrator</span>
+                    <span className="aboutSkillTag creativeTag"><span className="skillDot creative" />Figma UI/UX</span>
+                  </div>
+                </div>
+
+                <div className="aboutSkillCategory">
+                  <div className="aboutSkillCategoryTitle">
+                    <span>⚡</span> AI Video & Creative Prompting
+                  </div>
+                  <div className="aboutSkillsGrid">
+                    <span className="aboutSkillTag aiTag"><span className="skillDot ai" />AI Video Creation</span>
+                    <span className="aboutSkillTag aiTag"><span className="skillDot ai" />Prompt Engineering</span>
+                    <span className="aboutSkillTag aiTag"><span className="skillDot ai" />Generative AI Media</span>
+                    <span className="aboutSkillTag aiTag"><span className="skillDot ai" />AI-Assisted Development</span>
+                  </div>
                 </div>
               </div>
             </div>
