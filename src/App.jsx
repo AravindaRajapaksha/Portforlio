@@ -801,12 +801,6 @@ export default function App() {
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
-            <button type="button" className="navLinkBtn" onClick={openCvModal}>
-              Preview CV
-            </button>
-            <a className="navDownloadPill" href={cvData.href} download={cvData.fileName}>
-              Download CV
-            </a>
           </nav>
 
           <div className="navRight">
@@ -873,17 +867,6 @@ export default function App() {
         </div>
 
         <div className={`mobileMenu ${mobileOpen ? "open" : ""}`}>
-          <a
-            href={cvData.href}
-            download={cvData.fileName}
-            className="mobileMenuBtn"
-            onClick={() => setMobileOpen(false)}
-          >
-            📥 Download CV
-          </a>
-          <button type="button" className="mobileMenuBtn" onClick={openCvModal}>
-            📄 Preview CV
-          </button>
           <a href="#home" onClick={() => setMobileOpen(false)}>
             🏠 Home
           </a>
