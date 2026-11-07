@@ -1,13 +1,13 @@
 :root {
-  --bg: #080414;
-  --bg2: #0e0724;
-  --text: rgba(255, 255, 255, .92);
-  --muted: rgba(255, 255, 255, .65);
-  --card: rgba(255, 255, 255, .06);
-  --stroke: rgba(255, 255, 255, .12);
+  --bg: #030107;
+  --bg2: #05020c;
+  --text: rgba(255, 255, 255, .94);
+  --muted: rgba(255, 255, 255, .62);
+  --card: rgba(255, 255, 255, .04);
+  --stroke: rgba(255, 255, 255, .08);
   --accent: #b47cff;
   --accent2: #c084fc;
-  --shadow: 0 22px 70px rgba(0, 0, 0, .50);
+  --shadow: 0 24px 75px rgba(0, 0, 0, .75);
 }
 
 * {
@@ -25,11 +25,9 @@ body {
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   background:
-    radial-gradient(1200px 750px at 50% 0%, rgba(139, 92, 246, 0.18), transparent 70%),
-    radial-gradient(1100px 700px at 85% 40%, rgba(124, 58, 237, 0.14), transparent 70%),
-    radial-gradient(1200px 800px at 15% 70%, rgba(147, 51, 234, 0.16), transparent 70%),
-    radial-gradient(1300px 900px at 50% 100%, rgba(109, 40, 217, 0.22), transparent 70%),
-    linear-gradient(180deg, #080414 0%, #0d0724 50%, #080318 100%);
+    radial-gradient(1000px 500px at 50% -2%, rgba(124, 58, 237, 0.08), transparent 60%),
+    radial-gradient(1100px 600px at 50% 100%, rgba(109, 40, 217, 0.12), transparent 65%),
+    linear-gradient(180deg, #020106 0%, #05020d 35%, #04010a 70%, #020005 100%);
   color: var(--text);
   overflow-x: hidden;
   width: 100%;
@@ -48,7 +46,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: -3;
-  opacity: .50;
+  opacity: .58;
 }
 
 .bg {
@@ -60,33 +58,33 @@ body {
 
 .glow {
   position: absolute;
-  width: 680px;
-  height: 680px;
+  width: 620px;
+  height: 620px;
   border-radius: 999px;
-  filter: blur(85px);
-  opacity: .54;
+  filter: blur(100px);
+  opacity: .36;
 }
 
 .g1 {
   left: calc(-220px + var(--mouse-x, 0) * 25px);
   top: calc(-240px + var(--mouse-y, 0) * 25px);
-  background: radial-gradient(circle at 35% 35%, #b47cff, transparent 62%);
-  animation: blob-bounce 12s infinite alternate ease-in-out;
+  background: radial-gradient(circle at 35% 35%, rgba(180, 124, 255, 0.8), transparent 65%);
+  animation: blob-bounce 14s infinite alternate ease-in-out;
 }
 
 .g2 {
   right: calc(-240px - var(--mouse-x, 0) * 25px);
   top: calc(120px + var(--mouse-y, 0) * 25px);
   /* Toned down blue and shifted towards purple/violet: a soft luminous royal violet with subtle periwinkle depth */
-  background: radial-gradient(circle at 35% 35%, #9061f9, rgba(129, 140, 248, 0.5) 45%, transparent 65%);
-  animation: blob-bounce 15s infinite alternate-reverse ease-in-out;
+  background: radial-gradient(circle at 35% 35%, rgba(144, 97, 249, 0.75), rgba(99, 102, 241, 0.3) 45%, transparent 65%);
+  animation: blob-bounce 16s infinite alternate-reverse ease-in-out;
 }
 
 .g3 {
   left: calc(35% + var(--mouse-x, 0) * 25px);
   bottom: calc(-360px - var(--mouse-y, 0) * 25px);
   /* Rich cosmic violet nebula, matching the shade in 1c735ef1.png */
-  background: radial-gradient(circle at 35% 35%, #7c3aed, rgba(147, 51, 234, 0.8) 45%, transparent 65%);
+  background: radial-gradient(circle at 35% 35%, #7c3aed, rgba(147, 51, 234, 0.65) 45%, transparent 65%);
   animation: blob-bounce 18s infinite alternate ease-in-out;
 }
 
@@ -126,10 +124,10 @@ body {
   max-width: 1040px;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  background: rgba(255, 255, 255, .07);
-  border: 1px solid rgba(255, 255, 255, .13);
+  background: rgba(6, 3, 14, 0.78);
+  border: 1px solid rgba(255, 255, 255, .09);
   border-radius: 20px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, .45), 0 0 0 1px rgba(255, 255, 255, .04) inset;
+  box-shadow: 0 12px 42px rgba(0, 0, 0, .75), 0 0 0 1px rgba(255, 255, 255, .04) inset;
 }
 
 .navInner {
@@ -981,9 +979,9 @@ body {
 /* CARD */
 .card {
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
-  border: 1px solid rgba(255, 255, 255, .10);
-  box-shadow: var(--shadow);
+  background: radial-gradient(120% 100% at 50% 0%, rgba(18, 12, 32, 0.72) 0%, rgba(8, 4, 16, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -1366,11 +1364,11 @@ body {
   padding: 18px 20px;
   border-radius: 22px;
   background:
-    radial-gradient(380px 180px at 0% 0%, rgba(180, 124, 255, 0.2), transparent 65%),
-    radial-gradient(320px 160px at 100% 100%, rgba(192, 132, 252, 0.12), transparent 65%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(180, 124, 255, 0.24);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42);
+    radial-gradient(380px 180px at 0% 0%, rgba(180, 124, 255, 0.14), transparent 65%),
+    radial-gradient(320px 160px at 100% 100%, rgba(192, 132, 252, 0.08), transparent 65%),
+    linear-gradient(145deg, rgba(14, 8, 24, 0.75), rgba(7, 3, 14, 0.85));
+  border: 1px solid rgba(180, 124, 255, 0.18);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   position: relative;
@@ -1502,8 +1500,8 @@ body {
   gap: 14px;
   padding: 15px 18px;
   border-radius: 20px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(145deg, rgba(14, 8, 24, 0.72), rgba(7, 3, 14, 0.85));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   position: relative;
@@ -1633,7 +1631,7 @@ body {
   gap: 12px;
   padding: 15px 18px;
   border-radius: 20px;
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018));
+  background: linear-gradient(155deg, rgba(14, 8, 24, 0.72), rgba(7, 3, 14, 0.85));
   border: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
   position: relative;
@@ -1643,9 +1641,9 @@ body {
 
 .socialBentoCard:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.07);
+  background: linear-gradient(155deg, rgba(22, 12, 38, 0.8), rgba(11, 5, 22, 0.9));
   border-color: rgba(180, 124, 255, 0.32);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.55);
 }
 
 .socialBentoTop {
@@ -1728,11 +1726,11 @@ body {
   padding: 28px;
   border-radius: 24px;
   background:
-    radial-gradient(500px 220px at 85% 0%, rgba(180, 124, 255, 0.14), transparent 65%),
-    radial-gradient(450px 240px at 10% 100%, rgba(192, 132, 252, 0.12), transparent 65%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+    radial-gradient(500px 220px at 85% 0%, rgba(180, 124, 255, 0.10), transparent 65%),
+    radial-gradient(450px 240px at 10% 100%, rgba(192, 132, 252, 0.08), transparent 65%),
+    linear-gradient(180deg, rgba(14, 8, 24, 0.78), rgba(7, 3, 14, 0.88));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   display: flex;
@@ -1907,9 +1905,9 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(8, 4, 18, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(3, 1, 7, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: grid;
   place-items: center;
   padding: 24px;
@@ -1917,15 +1915,15 @@ body {
 }
 
 .modal {
-  background: #0f0a1c;
-  border: 1px solid rgba(255, 255, 255, .15);
+  background: #070311;
+  border: 1px solid rgba(255, 255, 255, .11);
   border-radius: 32px;
   width: 100%;
   max-width: 960px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 40px 120px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .05) inset;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .85), 0 0 0 1px rgba(255, 255, 255, .05) inset;
   animation: modalSlide 0.4s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
