@@ -699,18 +699,18 @@ export default function App() {
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
-    // Responsive star count
-    const starCount = Math.min(Math.floor((w * h) / 10000), 125);
+    // Responsive star count (increased for richer cosmic density)
+    const starCount = Math.min(Math.floor((w * h) / 7200), 170);
     const stars = Array.from({ length: starCount }).map(() => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: Math.random() * 1.6 + 0.5,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: (Math.random() - 0.5) * 0.22,
-      baseAlpha: Math.random() * 0.45 + 0.35,
+      r: Math.random() * 1.8 + 0.6,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      baseAlpha: Math.random() * 0.5 + 0.38,
       phase: Math.random() * Math.PI * 2,
-      pulseSpeed: Math.random() * 0.025 + 0.015,
-      isDiamond: Math.random() > 0.72,
+      pulseSpeed: Math.random() * 0.03 + 0.018,
+      isDiamond: Math.random() > 0.58, // ~42% are sparkling diamond stars
     }));
 
     // Shooting stars (Meteors)
@@ -719,11 +719,11 @@ export default function App() {
     const mouse = { x: -1000, y: -1000 };
 
     const spawnMeteor = () => {
-      const startX = Math.random() * (w * 0.8) + w * 0.1;
-      const startY = Math.random() * (h * 0.35);
-      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.2; // ~45 deg downward
-      const speed = Math.random() * 9 + 11;
-      const length = Math.random() * 100 + 70;
+      const startX = Math.random() * (w * 0.85) + w * 0.08;
+      const startY = Math.random() * (h * 0.38);
+      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.22; // ~45 deg downward
+      const speed = Math.random() * 10 + 12;
+      const length = Math.random() * 130 + 85;
       meteors.push({
         x: startX,
         y: startY,
@@ -731,23 +731,24 @@ export default function App() {
         dy: Math.sin(angle) * speed,
         length,
         life: 1.0,
-        decay: Math.random() * 0.018 + 0.016,
+        decay: Math.random() * 0.02 + 0.016,
       });
     };
 
     const drawStarSparkle = (cx, cy, radius, alpha) => {
-      const inner = radius * 0.25;
+      const inner = radius * 0.24;
       ctx.save();
+      ctx.translate(cx, cy);
       ctx.beginPath();
-      ctx.moveTo(cx, cy - radius);
-      ctx.quadraticCurveTo(cx, cy, cx + inner, cy);
-      ctx.quadraticCurveTo(cx, cy, cx, cy + radius);
-      ctx.quadraticCurveTo(cx, cy, cx - inner, cy);
-      ctx.quadraticCurveTo(cx, cy, cx, cy - radius);
+      ctx.moveTo(0, -radius);
+      ctx.quadraticCurveTo(0, 0, inner, 0);
+      ctx.quadraticCurveTo(0, 0, 0, radius);
+      ctx.quadraticCurveTo(0, 0, -inner, 0);
+      ctx.quadraticCurveTo(0, 0, 0, -radius);
       ctx.closePath();
       ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
       ctx.shadowColor = "#c084fc";
-      ctx.shadowBlur = 6;
+      ctx.shadowBlur = 8;
       ctx.fill();
       ctx.restore();
     };
@@ -758,8 +759,8 @@ export default function App() {
       ctx.clearRect(0, 0, w, h);
 
       const now = Date.now();
-      // Periodically spawn meteors when idle
-      if (now - lastMeteor > 4000 && Math.random() < 0.03) {
+      // More frequent meteors when idle (every 2.2 to 3.5 seconds)
+      if (now - lastMeteor > 2200 && Math.random() < 0.055) {
         spawnMeteor();
         lastMeteor = now;
       }
@@ -771,7 +772,7 @@ export default function App() {
         m.y += m.dy;
         m.life -= m.decay;
 
-        if (m.life <= 0 || m.x > w + 100 || m.y > h + 100) {
+        if (m.life <= 0 || m.x > w + 120 || m.y > h + 120) {
           meteors.splice(i, 1);
           continue;
         }
@@ -782,28 +783,29 @@ export default function App() {
 
         const grad = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
         grad.addColorStop(0, "rgba(180, 124, 255, 0)");
-        grad.addColorStop(0.65, `rgba(192, 132, 252, ${m.life * 0.55})`);
-        grad.addColorStop(1, `rgba(255, 255, 255, ${m.life * 0.95})`);
+        grad.addColorStop(0.5, `rgba(168, 85, 247, ${m.life * 0.65})`);
+        grad.addColorStop(0.85, `rgba(216, 180, 254, ${m.life * 0.9})`);
+        grad.addColorStop(1, `rgba(255, 255, 255, ${m.life * 1.0})`);
 
         ctx.save();
         ctx.beginPath();
         ctx.moveTo(tailX, tailY);
         ctx.lineTo(m.x, m.y);
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.6;
+        ctx.lineWidth = 1.9;
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(m.x, m.y, 2, 0, Math.PI * 2);
+        ctx.arc(m.x, m.y, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${m.life})`;
-        ctx.shadowColor = "#d8b4fe";
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = "#e9d5ff";
+        ctx.shadowBlur = 12;
         ctx.fill();
         ctx.restore();
       }
 
       // 2. Draw Constellation Connection Lines between close stars
-      const maxDist = 95;
+      const maxDist = 115;
       for (let i = 0; i < stars.length; i++) {
         for (let j = i + 1; j < stars.length; j++) {
           const dx = stars[i].x - stars[j].x;
@@ -811,12 +813,12 @@ export default function App() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < maxDist) {
-            const lineAlpha = (1 - dist / maxDist) * 0.16;
+            const lineAlpha = (1 - dist / maxDist) * 0.25;
             ctx.beginPath();
             ctx.moveTo(stars[i].x, stars[i].y);
             ctx.lineTo(stars[j].x, stars[j].y);
-            ctx.strokeStyle = `rgba(180, 124, 255, ${lineAlpha})`;
-            ctx.lineWidth = 0.75;
+            ctx.strokeStyle = `rgba(192, 132, 252, ${lineAlpha})`;
+            ctx.lineWidth = 0.85;
             ctx.stroke();
           }
         }
@@ -826,13 +828,13 @@ export default function App() {
           const mdx = stars[i].x - mouse.x;
           const mdy = stars[i].y - mouse.y;
           const mdist = Math.hypot(mdx, mdy);
-          if (mdist < 130) {
-            const mAlpha = (1 - mdist / 130) * 0.22;
+          if (mdist < 150) {
+            const mAlpha = (1 - mdist / 150) * 0.32;
             ctx.beginPath();
             ctx.moveTo(stars[i].x, stars[i].y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(192, 132, 252, ${mAlpha})`;
-            ctx.lineWidth = 0.85;
+            ctx.strokeStyle = `rgba(216, 180, 254, ${mAlpha})`;
+            ctx.lineWidth = 0.95;
             ctx.stroke();
           }
         }
@@ -850,10 +852,10 @@ export default function App() {
         if (s.y > h + 15) s.y = -15;
 
         // Twinkle effect (alpha breathing)
-        const alpha = Math.max(0.12, Math.min(1, s.baseAlpha + Math.sin(s.phase) * 0.35));
+        const alpha = Math.max(0.18, Math.min(1, s.baseAlpha + Math.sin(s.phase) * 0.42));
 
-        if (s.isDiamond && s.r > 1.1) {
-          drawStarSparkle(s.x, s.y, s.r * 2.4, alpha);
+        if (s.isDiamond && s.r > 1.0) {
+          drawStarSparkle(s.x, s.y, s.r * 2.5, alpha);
         } else {
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
