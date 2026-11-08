@@ -611,8 +611,6 @@ function SocialCard({ icon, label, handle, href, brandClass = "", delay = 0 }) {
   );
 }
 
-import CursorFollower from "./CursorFollower";
-
 export default function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -701,33 +699,167 @@ export default function App() {
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
-    const stars = Array.from({ length: 120 }).map(() => ({
+    // Responsive star count
+    const starCount = Math.min(Math.floor((w * h) / 10000), 125);
+    const stars = Array.from({ length: starCount }).map(() => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: Math.random() * 1.7 + 0.2,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      a: Math.random() * 0.6 + 0.22,
+      r: Math.random() * 1.6 + 0.5,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      baseAlpha: Math.random() * 0.45 + 0.35,
+      phase: Math.random() * Math.PI * 2,
+      pulseSpeed: Math.random() * 0.025 + 0.015,
+      isDiamond: Math.random() > 0.72,
     }));
+
+    // Shooting stars (Meteors)
+    const meteors = [];
+    let lastMeteor = Date.now();
+    const mouse = { x: -1000, y: -1000 };
+
+    const spawnMeteor = () => {
+      const startX = Math.random() * (w * 0.8) + w * 0.1;
+      const startY = Math.random() * (h * 0.35);
+      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.2; // ~45 deg downward
+      const speed = Math.random() * 9 + 11;
+      const length = Math.random() * 100 + 70;
+      meteors.push({
+        x: startX,
+        y: startY,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        length,
+        life: 1.0,
+        decay: Math.random() * 0.018 + 0.016,
+      });
+    };
+
+    const drawStarSparkle = (cx, cy, radius, alpha) => {
+      const inner = radius * 0.25;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - radius);
+      ctx.quadraticCurveTo(cx, cy, cx + inner, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy + radius);
+      ctx.quadraticCurveTo(cx, cy, cx - inner, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy - radius);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+      ctx.shadowColor = "#c084fc";
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.restore();
+    };
 
     let raf = 0;
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
 
+      const now = Date.now();
+      // Periodically spawn meteors when idle
+      if (now - lastMeteor > 4000 && Math.random() < 0.03) {
+        spawnMeteor();
+        lastMeteor = now;
+      }
+
+      // 1. Draw Meteors / Shooting stars
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        const m = meteors[i];
+        m.x += m.dx;
+        m.y += m.dy;
+        m.life -= m.decay;
+
+        if (m.life <= 0 || m.x > w + 100 || m.y > h + 100) {
+          meteors.splice(i, 1);
+          continue;
+        }
+
+        const norm = Math.hypot(m.dx, m.dy) || 1;
+        const tailX = m.x - (m.dx / norm) * m.length;
+        const tailY = m.y - (m.dy / norm) * m.length;
+
+        const grad = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
+        grad.addColorStop(0, "rgba(180, 124, 255, 0)");
+        grad.addColorStop(0.65, `rgba(192, 132, 252, ${m.life * 0.55})`);
+        grad.addColorStop(1, `rgba(255, 255, 255, ${m.life * 0.95})`);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(m.x, m.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${m.life})`;
+        ctx.shadowColor = "#d8b4fe";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 2. Draw Constellation Connection Lines between close stars
+      const maxDist = 95;
+      for (let i = 0; i < stars.length; i++) {
+        for (let j = i + 1; j < stars.length; j++) {
+          const dx = stars[i].x - stars[j].x;
+          const dy = stars[i].y - stars[j].y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < maxDist) {
+            const lineAlpha = (1 - dist / maxDist) * 0.16;
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.strokeStyle = `rgba(180, 124, 255, ${lineAlpha})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+
+        // Faint mouse interaction thread if close to mouse
+        if (mouse.x > 0 && mouse.y > 0) {
+          const mdx = stars[i].x - mouse.x;
+          const mdy = stars[i].y - mouse.y;
+          const mdist = Math.hypot(mdx, mdy);
+          if (mdist < 130) {
+            const mAlpha = (1 - mdist / 130) * 0.22;
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(192, 132, 252, ${mAlpha})`;
+            ctx.lineWidth = 0.85;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. Update & Draw Stars with Twinkle Animation
       for (const s of stars) {
         s.x += s.vx;
         s.y += s.vy;
+        s.phase += s.pulseSpeed;
 
-        if (s.x < -20) s.x = w + 20;
-        if (s.x > w + 20) s.x = -20;
-        if (s.y < -20) s.y = h + 20;
-        if (s.y > h + 20) s.y = -20;
+        if (s.x < -15) s.x = w + 15;
+        if (s.x > w + 15) s.x = -15;
+        if (s.y < -15) s.y = h + 15;
+        if (s.y > h + 15) s.y = -15;
 
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${s.a})`;
-        ctx.fill();
+        // Twinkle effect (alpha breathing)
+        const alpha = Math.max(0.12, Math.min(1, s.baseAlpha + Math.sin(s.phase) * 0.35));
+
+        if (s.isDiamond && s.r > 1.1) {
+          drawStarSparkle(s.x, s.y, s.r * 2.4, alpha);
+        } else {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.fill();
+        }
       }
 
       raf = requestAnimationFrame(draw);
@@ -740,19 +872,24 @@ export default function App() {
     };
 
     const onMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-      const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
-      document.documentElement.style.setProperty("--mouse-x", x);
-      document.documentElement.style.setProperty("--mouse-y", y);
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const onMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
     };
 
     window.addEventListener("resize", onResize);
     window.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseleave", onMouseLeave);
     raf = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -779,13 +916,9 @@ export default function App() {
 
   return (
     <div className="page" id="home">
-      <CursorFollower />
       <canvas ref={canvasRef} className="stars" aria-hidden="true" />
 
       <div className="bg" aria-hidden="true">
-        <div className="glow g1" />
-        <div className="glow g2" />
-        <div className="glow g3" />
         <div className="noise" />
       </div>
 
