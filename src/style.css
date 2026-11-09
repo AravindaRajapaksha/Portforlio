@@ -19,6 +19,8 @@ body,
 #root {
   height: 100%;
   scroll-behavior: smooth;
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 body {
@@ -29,7 +31,7 @@ body {
     radial-gradient(1100px 600px at 50% 100%, rgba(109, 40, 217, 0.12), transparent 65%),
     linear-gradient(180deg, #020106 0%, #05020d 35%, #04010a 70%, #020005 100%);
   color: var(--text);
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   -webkit-tap-highlight-color: transparent;
   /* Fixes "black box" flash on tap */
@@ -37,7 +39,9 @@ body {
 
 .page {
   min-height: 100%;
-  position: relative
+  position: relative;
+  overflow-x: clip;
+  width: 100%;
 }
 
 .stars {
@@ -2230,41 +2234,67 @@ body {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@media (max-width: 640px) {
-  .modalContent {
-    padding: 24px;
+/* ===================================================
+   COMPREHENSIVE MOBILE & TABLET RESPONSIVENESS
+   =================================================== */
+
+/* Tablet & Small Laptop (<= 1024px) */
+@media (max-width: 1024px) {
+  .wrap {
+    padding: 24px 28px;
   }
 
-  .cvModalContent {
-    padding-top: 56px;
+  .hero {
+    padding-top: 90px;
   }
 
-  .modalClose {
-    top: 16px;
-    right: 16px;
+  .heroHeader {
+    gap: 36px;
+    padding-right: 0;
   }
 
-  .cvModalHeader {
-    flex-direction: column;
+  .avatarWrap {
+    transform: none;
   }
 
-  .cvViewerWrap {
-    min-height: 60vh;
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 22px;
   }
 
-  .cvViewer {
-    height: 60vh;
+  .aboutContainer {
+    padding: 36px 32px;
+    gap: 36px;
+  }
+
+  .contactShowcase {
+    gap: 22px;
   }
 }
 
-/* RESPONSIVE */
+/* Tablet & Large Mobile (<= 860px) */
 @media (max-width: 860px) {
+  .wrap {
+    padding: 20px 20px;
+  }
+
+  .nav {
+    width: calc(100% - 32px);
+    top: 12px;
+    border-radius: 18px;
+  }
+
+  .navInner {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
   .navLinks {
     display: none;
   }
 
   .navRight {
-    gap: 5px;
+    gap: 6px;
   }
 
   .iconPill {
@@ -2282,8 +2312,19 @@ body {
     display: flex;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
+  /* Prevent horizontal offscreen transforms from causing overflow on touch devices */
+  .reveal-left,
+  .reveal-right {
+    transform: translateY(32px);
+  }
+
+  .card.slide-left,
+  .card.slide-right {
+    transform: translateY(36px) scale(0.97);
+  }
+
+  .hero {
+    padding: 84px 0 28px;
   }
 
   .heroRow {
@@ -2293,10 +2334,36 @@ body {
   .heroHeader {
     display: flex;
     flex-direction: column-reverse;
-    gap: 30px;
+    gap: 26px;
     align-items: center;
     text-align: center;
     padding-right: 0;
+  }
+
+  .heroHeaderText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .heroBio {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btnRow {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .aboutSection .btnRow {
+    justify-content: flex-start;
+  }
+
+  .chips {
+    justify-content: center;
   }
 
   .avatarWrap {
@@ -2312,24 +2379,49 @@ body {
     aspect-ratio: 1 / 1;
   }
 
+  .avatarBadges {
+    justify-content: center;
+    max-width: 100%;
+  }
 
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px;
+  }
+
+  .projectReviewModal,
+  .cvModal {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 22px;
+  }
+
+  .projectModalHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-right: 48px;
+  }
+
+  .projectReviewContent {
+    padding: 24px 20px;
+  }
 
   .mobileMenu {
     display: flex;
     visibility: hidden;
     position: fixed;
-    top: 90px;
+    top: 78px;
     left: 50%;
     transform: translateX(-50%);
     width: auto;
     z-index: 49;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-    /* Container is now transparent */
     background: none;
     border: none;
     box-shadow: none;
@@ -2346,22 +2438,19 @@ body {
 
   .mobileMenu a,
   .mobileMenuBtn {
-    width: 220px;
-    /* Separate pill size */
+    width: 230px;
     padding: 12px 20px;
     text-align: center;
-    background: rgba(15, 10, 30, 0.75);
-    /* Balanced dark-purple background */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(12, 6, 26, 0.88);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(192, 132, 252, 0.25);
     border-radius: 999px;
-    /* Pill shape */
     font-size: 15px;
     color: white;
     text-decoration: none;
     font-weight: 600;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     opacity: 0;
     transform: translateY(-20px);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2388,36 +2477,582 @@ body {
 
   .mobileMenu a:active,
   .mobileMenuBtn:active {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(168, 85, 247, 0.28);
     transform: scale(0.96);
   }
 
-  .mobileMenu > :nth-child(1) {
-    transition-delay: .08s
+  .mobileMenu > :nth-child(1) { transition-delay: .06s; }
+  .mobileMenu > :nth-child(2) { transition-delay: .10s; }
+  .mobileMenu > :nth-child(3) { transition-delay: .14s; }
+  .mobileMenu > :nth-child(4) { transition-delay: .18s; }
+  .mobileMenu > :nth-child(5) { transition-delay: .22s; }
+  .mobileMenu > :nth-child(6) { transition-delay: .26s; }
+  .mobileMenu > :nth-child(7) { transition-delay: .30s; }
+}
+
+/* Mobile Devices (<= 640px) */
+@media (max-width: 640px) {
+  .wrap {
+    padding: 16px 16px;
   }
 
-  .mobileMenu > :nth-child(2) {
-    transition-delay: .12s
+  .section {
+    padding: 32px 0;
   }
 
-  .mobileMenu > :nth-child(3) {
-    transition-delay: .16s
+  .sectionTitle {
+    font-size: 20px;
+    margin-bottom: 18px;
   }
 
-  .mobileMenu > :nth-child(4) {
-    transition-delay: .2s
+  .hero {
+    padding: 78px 0 22px;
   }
 
-  .mobileMenu > :nth-child(5) {
-    transition-delay: .24s
+  .title {
+    font-size: clamp(26px, 7.5vw, 36px);
+    line-height: 1.16;
   }
 
-  .mobileMenu > :nth-child(6) {
-    transition-delay: .28s
+  .sub {
+    font-size: 13.5px;
+    line-height: 1.6;
   }
 
-  .mobileMenu > :nth-child(7) {
-    transition-delay: .32s
+  .heroBio {
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  /* About Section */
+  .aboutContainer {
+    padding: 24px 18px;
+    border-radius: 22px;
+    gap: 28px;
+  }
+
+  .aboutTitle {
+    font-size: 24px;
+  }
+
+  .aboutBio {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .aboutHighlightItem {
+    padding: 12px 14px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+
+  .aboutHighlightItem span:last-child {
+    font-size: 12.5px;
+  }
+
+  .aboutSection .btnRow {
+    justify-content: center;
+  }
+
+  .aboutSection .btnRow .btn {
+    flex: 1 1 140px;
+  }
+
+  .aboutSkillsCol {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .aboutSkillsHeading {
+    font-size: 18px;
+  }
+
+  .aboutSkillsSub {
+    font-size: 13px;
+  }
+
+  .aboutSkillTag {
+    padding: 7px 12px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  /* Project Gallery Marquee */
+  .projectMarquee {
+    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  }
+
+  .galleryCard {
+    width: 245px;
+    padding: 16px 18px;
+    border-radius: 18px;
+  }
+
+  .galleryCardTitle {
+    font-size: 15.5px;
+  }
+
+  .galleryCardDesc {
+    font-size: 12.5px;
+  }
+
+  /* Projects Grid */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .cardImgWrap {
+    height: 190px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+
+  .cardTitle {
+    font-size: 16.5px;
+  }
+
+  .cardDesc {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .cardActions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cardActions .miniBtn {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Lab / Orbit */
+  .orbitWrap {
+    height: 180px;
+    margin-top: 12px;
+  }
+
+  .orbits {
+    height: 180px;
+  }
+
+  .planet {
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+  }
+
+  .planetMark {
+    font-size: 28px;
+  }
+
+  /* Contact Section */
+  .contactSection {
+    padding: 36px 0 42px;
+  }
+
+  .contactHeader {
+    margin-bottom: 24px;
+  }
+
+  .contactStatusBadge {
+    font-size: 11.5px;
+    padding: 6px 12px;
+    text-align: center;
+  }
+
+  .contactMainTitle {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .contactSub {
+    font-size: 13.5px;
+  }
+
+  .contactProfileCard {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 20px 16px;
+    gap: 14px;
+  }
+
+  .contactProfileMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contactCvBtnGroup {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .contactCvMiniBtn {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 12.5px;
+  }
+
+  .directContactCard {
+    padding: 12px 14px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+
+  .directContactMain {
+    gap: 10px;
+  }
+
+  .directContactIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  .contactCardValue {
+    font-size: 12.5px;
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  .copyPillBtn {
+    padding: 6px 11px;
+    font-size: 11.5px;
+  }
+
+  .socialBentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .socialBentoCard {
+    padding: 14px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .socialBentoIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .socialBentoLabel {
+    font-size: 13.5px;
+  }
+
+  .socialBentoHandle {
+    font-size: 11.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .contactFormCard {
+    padding: 22px 18px;
+    border-radius: 20px;
+    gap: 14px;
+  }
+
+  .contactFormTitle {
+    font-size: 19px;
+  }
+
+  .contactFormActions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contactSubmitBtn,
+  .contactSecondaryBtn {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 18px;
+  }
+
+  /* Modals */
+  .modalOverlay {
+    padding: 10px;
+  }
+
+  .modal {
+    border-radius: 20px;
+    max-height: 92vh;
+  }
+
+  .modalContent,
+  .projectReviewContent {
+    padding: 20px 16px;
+  }
+
+  .cvModalContent {
+    padding-top: 52px;
+  }
+
+  .modalClose {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .projectModalHeader {
+    padding-right: 40px;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .modalTitle {
+    font-size: 20px;
+  }
+
+  .projectModalTabs {
+    width: 100%;
+    display: flex;
+  }
+
+  .projectTabBtn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .browserToolbar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .browserControls {
+    display: none;
+  }
+
+  .browserAddressBar {
+    min-width: 0;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .browserViewport {
+    height: 55vh;
+    min-height: 290px;
+  }
+
+  .inPageVisualImg {
+    height: calc(100% - 108px);
+    padding: 10px;
+  }
+
+  .inPageSlideDots {
+    bottom: 98px;
+  }
+
+  .inPageOverlayBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .inPageOverlayDesc {
+    white-space: normal;
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .inPageOverlayBar .btn {
+    width: 100%;
+    padding: 9px 14px;
+    font-size: 12.5px;
+  }
+
+  .modalImg {
+    max-height: 240px;
+  }
+
+  .modalDesc {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modalActions .btn {
+    width: 100%;
+  }
+
+  .cvModalHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cvModalActions {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .cvModalActions .btn {
+    flex: 1;
+  }
+
+  .cvViewerWrap,
+  .cvViewer {
+    min-height: 58vh;
+    height: 58vh;
+    border-radius: 16px;
+  }
+}
+
+/* Small Phones (<= 480px) */
+@media (max-width: 480px) {
+  .wrap {
+    padding: 14px 12px;
+  }
+
+  .nav {
+    width: calc(100% - 20px);
+    top: 10px;
+    border-radius: 16px;
+  }
+
+  .navInner {
+    padding: 9px 12px;
+    gap: 6px;
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
+  .brandDot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .brandName {
+    font-size: 16px;
+  }
+
+  .navRight .iconPill {
+    width: 29px;
+    height: 29px;
+    border-radius: 8px;
+  }
+
+  .navRight .iconPill svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .menuBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+
+  .mobileMenu {
+    top: 70px;
+    width: calc(100% - 32px);
+    max-width: 260px;
+  }
+
+  .mobileMenu a,
+  .mobileMenuBtn {
+    width: 100%;
+    padding: 11px 18px;
+    font-size: 14px;
+  }
+
+  .avatar {
+    width: 138px;
+    height: 138px;
+  }
+
+  .heroBadge {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .btnRow {
+    gap: 10px;
+  }
+
+  .hero .btnRow .btn {
+    flex: 1 1 calc(50% - 6px);
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .pill {
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+
+  .aboutHighlights {
+    grid-template-columns: 1fr;
+  }
+
+  .cardImgWrap {
+    height: 175px;
+  }
+
+  .directContactCard {
+    flex-wrap: wrap;
+  }
+
+  .directContactCard .copyPillBtn {
+    width: 100%;
+    text-align: center;
+    padding: 7px 12px;
+    margin-top: 2px;
+  }
+
+  .foot {
+    padding: 20px 0 32px;
+    font-size: 11.5px;
+  }
+}
+
+/* Extra Small Phones (<= 380px) */
+@media (max-width: 380px) {
+  .navInner .navRight .iconPill {
+    display: none;
+  }
+
+  .hero .btnRow .btn {
+    flex: 1 1 100%;
+  }
+
+  .socialBentoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .contactCvBtnGroup {
+    flex-direction: column;
   }
 }
 

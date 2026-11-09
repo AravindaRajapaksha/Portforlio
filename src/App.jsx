@@ -396,7 +396,7 @@ function ProjectModal({ item, initialTab = "preview", onClose }) {
                     src={embedUrl}
                     title={`${item.title} Live Preview`}
                     className="projectLiveIframe"
-                    style={{ width: deviceWidth }}
+                    style={{ width: deviceWidth, maxWidth: "100%" }}
                     allowFullScreen
                   />
                 ) : (
