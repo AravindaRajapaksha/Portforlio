@@ -5,6 +5,21 @@ const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
 
 const projects = [
   {
+    title: "PhishGuard AI - ML Phishing Detection",
+    desc: "An intelligent machine learning phishing URL detection system with 24-feature lexical analysis and explainable threat insights.",
+    longDesc: "PhishGuard AI is a full-stack cybersecurity and machine learning platform built with React, TypeScript, FastAPI, and XGBoost. It passively extracts 24 lexical and structural features from suspicious URLs in memory without visiting the target link, evaluates threat probability using an XGBoost classifier trained on 14,411 verified URLs (96.46% ROC-AUC), automatically redacts sensitive query tokens before persistence, and provides interactive analytics and model evaluation dashboards.",
+    tags: ["React", "FastAPI", "XGBoost ML", "Cybersecurity"],
+    img: publicAsset("projects/phishguard1.png?v=2"),
+    images: [
+      publicAsset("projects/phishguard1.png?v=2"),
+      publicAsset("projects/phishguard2.png?v=2"),
+      publicAsset("projects/phishguard3.png?v=2"),
+      publicAsset("projects/phishguard4.png?v=2"),
+    ],
+    github: "https://github.com/AravindaRajapaksha/PhishGuard-AI",
+    live: "https://phish-guard-ai-seven.vercel.app/",
+  },
+  {
     title: "Hostel Registration System",
     desc: "A React-based hostel booking platform with approvals, payments, and QR-powered access tracking.",
     longDesc: "A full hostel registration workflow built with React and Vite, backed by Supabase. Students can submit booking requests, staff can handle academic and warden approvals, payments are tracked in the system, and QR generation plus QR scan history help support hostel access and confirmation flows with an ESP32-CAM scanner.",
