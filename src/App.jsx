@@ -351,7 +351,7 @@ function ProjectModal({ item, initialTab = "preview", onClose }) {
           </div>
 
           {activeTab === "preview" ? (
-            <div className="inPageBrowserFrame">
+            <div key="preview-pane" className="inPageBrowserFrame tabPaneFade">
               <div className="browserToolbar">
                 <div className="browserDots" aria-hidden="true">
                   <span className="bDot red" />
@@ -450,7 +450,7 @@ function ProjectModal({ item, initialTab = "preview", onClose }) {
               </div>
             </div>
           ) : (
-            <div className="projectDetailsPane">
+            <div key="details-pane" className="projectDetailsPane tabPaneFade">
               <div className="modalGallery">
                 {images.map((imgSrc, i) => (
                   <img key={i} src={imgSrc} alt={item.title} className="modalImg" />
@@ -626,15 +626,338 @@ function SocialCard({ icon, label, handle, href, brandClass = "", delay = 0 }) {
   );
 }
 
+const initialVibeTags = [
+  { id: "ui", emoji: "🔥", label: "Clean UI", baseCount: 94 },
+  { id: "projects", emoji: "🚀", label: "Cool Projects", baseCount: 112 },
+  { id: "vibe", emoji: "⚡", label: "Smooth Animations", baseCount: 87 },
+  { id: "hire", emoji: "💼", label: "Hire Ready!", baseCount: 105 },
+];
+
+const starMoods = {
+  0: {
+    emoji: "👾",
+    title: "Drop a Star Rating!",
+    sub: "Try clicking a star below — warning: low stars might be shy!",
+  },
+  1: {
+    emoji: "😱",
+    title: "1 Star?! Wait a second!",
+    sub: "Are you sure that wasn't a misclick? Try 5 stars for maximum cosmic power!",
+  },
+  2: {
+    emoji: "🥺",
+    title: "Only 2 Stars?",
+    sub: "My code is crying in binary... give those higher stars a try!",
+  },
+  3: {
+    emoji: "🤔",
+    title: "3 Stars — Solid!",
+    sub: "Appreciate the honest vibe! Always leveling up and building more.",
+  },
+  4: {
+    emoji: "😄",
+    title: "4 Stars — Awesome!",
+    sub: "So close to perfection! Glad you enjoyed exploring the portfolio.",
+  },
+  5: {
+    emoji: "🤩",
+    title: "5 Stars — You're a Legend!",
+    sub: "Maximum Cosmic Energy Unlocked! Thank you for the 10/10 vibe!",
+  },
+};
+
+const dodgeMessages = [
+  "😜 Haha, missed! That low star is too shy!",
+  "🏃‍♂️💨 404: Low rating not found in this galaxy!",
+  "🛸 Whoops! Gravity pulled that star away — try 5 Stars instead!",
+];
+
+function PortfolioRatingGame() {
+  const [selectedStar, setSelectedStar] = useState(() => {
+    const saved = localStorage.getItem("portfolio_star_rating");
+    return saved ? Number(saved) : 0;
+  });
+  const [hoverStar, setHoverStar] = useState(0);
+  const [submitted, setSubmitted] = useState(() => {
+    return Boolean(localStorage.getItem("portfolio_star_rating"));
+  });
+  const [dodgeCount, setDodgeCount] = useState(0);
+  const [dodgeMsg, setDodgeMsg] = useState("");
+  const [starOffsets, setStarOffsets] = useState({ 1: { x: 0, y: 0 }, 2: { x: 0, y: 0 } });
+  const [vibeClicks, setVibeClicks] = useState(() => {
+    try {
+      const saved = localStorage.getItem("portfolio_vibe_clicks");
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+  const [burstParticles, setBurstParticles] = useState([]);
+
+  const activeStar = hoverStar || selectedStar;
+  const currentMood = starMoods[activeStar] || starMoods[0];
+
+  const triggerParticleBurst = () => {
+    const colors = ["#c084fc", "#facc15", "#38bdf8", "#f472b6", "#34d399", "#a855f7"];
+    const particles = Array.from({ length: 26 }).map((_, idx) => {
+      const angle = (Math.PI * 2 * idx) / 26 + (Math.random() - 0.5) * 0.25;
+      const dist = 70 + Math.random() * 110;
+      return {
+        id: `${Date.now()}-${idx}`,
+        tx: `${Math.cos(angle) * dist}px`,
+        ty: `${Math.sin(angle) * dist - 20}px`,
+        color: colors[idx % colors.length],
+        size: `${Math.floor(Math.random() * 6 + 6)}px`,
+      };
+    });
+    setBurstParticles(particles);
+    setTimeout(() => setBurstParticles([]), 1000);
+  };
+
+  const handleLowStarDodge = (starNum, e) => {
+    if (dodgeCount >= 3 || submitted) return false;
+    if (e) e.preventDefault();
+
+    const randX = (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 34 + 18);
+    const randY = (Math.random() > 0.5 ? -1 : 1) * Math.floor(Math.random() * 24 + 14);
+
+    setStarOffsets((prev) => ({
+      ...prev,
+      [starNum]: { x: randX, y: randY },
+    }));
+    const nextDodge = dodgeCount + 1;
+    setDodgeCount(nextDodge);
+    setDodgeMsg(dodgeMessages[(nextDodge - 1) % dodgeMessages.length]);
+    return true;
+  };
+
+  const handleStarClick = (starNum, e) => {
+    if ((starNum === 1 || starNum === 2) && dodgeCount < 3) {
+      const dodged = handleLowStarDodge(starNum, e);
+      if (dodged) return;
+    }
+
+    setDodgeMsg("");
+    setStarOffsets({ 1: { x: 0, y: 0 }, 2: { x: 0, y: 0 } });
+    setSelectedStar(starNum);
+    setSubmitted(true);
+    localStorage.setItem("portfolio_star_rating", String(starNum));
+    triggerParticleBurst();
+  };
+
+  const handleVibeToggle = (id) => {
+    setVibeClicks((prev) => {
+      const current = prev[id] || 0;
+      const next = { ...prev, [id]: current + 1 };
+      localStorage.setItem("portfolio_vibe_clicks", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handleResetRating = () => {
+    setSubmitted(false);
+    setSelectedStar(0);
+    setHoverStar(0);
+    setDodgeCount(0);
+    setDodgeMsg("");
+    setStarOffsets({ 1: { x: 0, y: 0 }, 2: { x: 0, y: 0 } });
+    localStorage.removeItem("portfolio_star_rating");
+  };
+
+  const totalRatings = 128 + (submitted ? 1 : 0);
+  const avgRating = submitted
+    ? ((128 * 4.9 + selectedStar) / 129).toFixed(1)
+    : "4.9";
+
+  return (
+    <section className="section ratingSection" id="rate">
+      <Reveal direction="bottom">
+        <div className="ratingCard">
+          {burstParticles.length > 0 && (
+            <div className="ratingBurstLayer" aria-hidden="true">
+              {burstParticles.map((p) => (
+                <span
+                  key={p.id}
+                  className="ratingParticle"
+                  style={{
+                    "--tx": p.tx,
+                    "--ty": p.ty,
+                    "--p-color": p.color,
+                    "--p-size": p.size,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="ratingTopMeta">
+            <span className="ratingBadge">✨ Interactive Vibe Check</span>
+            <div className="ratingLiveStats">
+              <span className="ratingStatStar">★ {avgRating}</span>
+              <span className="ratingStatSep">•</span>
+              <span>{totalRatings} Ratings</span>
+            </div>
+          </div>
+
+          <div className="ratingMoodWrap">
+            <div className={`ratingMoodOrb ${activeStar === 5 ? "legendary" : ""}`}>
+              <span className="ratingMoodEmoji">{currentMood.emoji}</span>
+            </div>
+            <h3 className="ratingTitle">{currentMood.title}</h3>
+            <p className="ratingSub">
+              {dodgeMsg ? (
+                <span className="ratingDodgeAlert">{dodgeMsg}</span>
+              ) : (
+                currentMood.sub
+              )}
+            </p>
+          </div>
+
+          <div
+            className="ratingStarsRow"
+            onMouseLeave={() => setHoverStar(0)}
+            role="radiogroup"
+            aria-label="Rate this portfolio from 1 to 5 stars"
+          >
+            {[1, 2, 3, 4, 5].map((starNum) => {
+              const isFilled = starNum <= activeStar;
+              const isShy = (starNum === 1 || starNum === 2) && dodgeCount < 3 && !submitted;
+              const offset = starOffsets[starNum] || { x: 0, y: 0 };
+
+              return (
+                <button
+                  key={starNum}
+                  type="button"
+                  className={`ratingStarBtn ${isFilled ? "filled" : ""} ${
+                    starNum === 5 && dodgeCount > 0 && !submitted ? "pulseHighlight" : ""
+                  }`}
+                  style={{
+                    transform:
+                      offset.x || offset.y
+                        ? `translate(${offset.x}px, ${offset.y}px)`
+                        : undefined,
+                  }}
+                  onMouseEnter={() => {
+                    if (isShy) {
+                      handleLowStarDodge(starNum);
+                    } else {
+                      setHoverStar(starNum);
+                    }
+                  }}
+                  onClick={(e) => handleStarClick(starNum, e)}
+                  aria-label={`Rate ${starNum} out of 5 stars`}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="ratingStarSvg"
+                    fill={isFilled ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <span className="ratingStarNum">{starNum}★</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="ratingVibeSection">
+            <p className="ratingVibeLabel">Tap to boost what you liked most:</p>
+            <div className="ratingVibeGrid">
+              {initialVibeTags.map((tag) => {
+                const userCount = vibeClicks[tag.id] || 0;
+                const total = tag.baseCount + userCount;
+                return (
+                  <button
+                    key={tag.id}
+                    type="button"
+                    className={`ratingVibePill ${userCount > 0 ? "boosted" : ""}`}
+                    onClick={() => handleVibeToggle(tag.id)}
+                  >
+                    <span className="vibeEmoji">{tag.emoji}</span>
+                    <span className="vibeText">{tag.label}</span>
+                    <span className="vibeCount">{total}</span>
+                    {userCount > 0 && <span className="vibePlus">+{userCount}</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {submitted && (
+            <div className="ratingSubmittedBar">
+              <span className="ratingThanksText">
+                🎉 Ranked <strong>{selectedStar}.0 / 5.0</strong> — Thanks for playing!
+              </span>
+              <button
+                type="button"
+                className="ratingResetBtn"
+                onClick={handleResetRating}
+              >
+                Rate Again ↻
+              </button>
+            </div>
+          )}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
 export default function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [projectModalTab, setProjectModalTab] = useState("preview");
   const [isCvOpen, setIsCvOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
   const [formSent, setFormSent] = useState(false);
   const canvasRef = useRef(null);
+
+  const scrollToSection = (e, sectionId) => {
+    if (e) e.preventDefault();
+    setMobileOpen(false);
+    setActiveSection(sectionId);
+    const target = document.getElementById(sectionId);
+    if (target) {
+      const navOffset = 88;
+      const top = sectionId === "home"
+        ? 0
+        : target.getBoundingClientRect().top + window.scrollY - navOffset;
+      window.scrollTo({ top, behavior: "smooth" });
+      window.history.replaceState(null, "", `#${sectionId}`);
+    }
+  };
+
+  useEffect(() => {
+    const sectionIds = ["home", "about", "projects", "contact", "rate"];
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0);
+
+      let current = "home";
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 240) {
+            current = id;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const openProjectModal = (item, tab = "preview") => {
     setProjectModalTab(tab);
@@ -940,17 +1263,53 @@ export default function App() {
       </div>
 
       <header className="nav">
+        <div
+          className="navScrollProgress"
+          style={{ transform: `scaleX(${scrollProgress / 100})` }}
+          aria-hidden="true"
+        />
         <div className="navInner">
-          <a className="brand" href="#home" aria-label="home">
+          <a className="brand" href="#home" onClick={(e) => scrollToSection(e, "home")} aria-label="home">
             <div className="brandDot" />
             <span className="brandName">Aravinda</span>
           </a>
 
           <nav className="navLinks">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <a
+              href="#home"
+              className={activeSection === "home" ? "active" : ""}
+              onClick={(e) => scrollToSection(e, "home")}
+            >
+              Home
+            </a>
+            <a
+              href="#about"
+              className={activeSection === "about" ? "active" : ""}
+              onClick={(e) => scrollToSection(e, "about")}
+            >
+              About
+            </a>
+            <a
+              href="#projects"
+              className={activeSection === "projects" ? "active" : ""}
+              onClick={(e) => scrollToSection(e, "projects")}
+            >
+              Projects
+            </a>
+            <a
+              href="#contact"
+              className={activeSection === "contact" ? "active" : ""}
+              onClick={(e) => scrollToSection(e, "contact")}
+            >
+              Contact
+            </a>
+            <a
+              href="#rate"
+              className={activeSection === "rate" ? "active" : ""}
+              onClick={(e) => scrollToSection(e, "rate")}
+            >
+              Rate ★
+            </a>
           </nav>
 
           <div className="navRight">
@@ -1017,17 +1376,20 @@ export default function App() {
         </div>
 
         <div className={`mobileMenu ${mobileOpen ? "open" : ""}`}>
-          <a href="#home" onClick={() => setMobileOpen(false)}>
+          <a href="#home" className={activeSection === "home" ? "active" : ""} onClick={(e) => scrollToSection(e, "home")}>
             🏠 Home
           </a>
-          <a href="#about" onClick={() => setMobileOpen(false)}>
+          <a href="#about" className={activeSection === "about" ? "active" : ""} onClick={(e) => scrollToSection(e, "about")}>
             👤 About
           </a>
-          <a href="#projects" onClick={() => setMobileOpen(false)}>
+          <a href="#projects" className={activeSection === "projects" ? "active" : ""} onClick={(e) => scrollToSection(e, "projects")}>
             🚀 Projects
           </a>
-          <a href="#contact" onClick={() => setMobileOpen(false)}>
+          <a href="#contact" className={activeSection === "contact" ? "active" : ""} onClick={(e) => scrollToSection(e, "contact")}>
             ✉️ Contact
+          </a>
+          <a href="#rate" className={activeSection === "rate" ? "active" : ""} onClick={(e) => scrollToSection(e, "rate")}>
+            ⭐ Rate Portfolio
           </a>
           <div className="mobileSocialRow">
             <a
@@ -1502,6 +1864,8 @@ export default function App() {
             </Reveal>
           </div>
         </section>
+
+        <PortfolioRatingGame />
 
         <footer className="foot">Built with React • Hosted on GitHub Pages</footer>
       </main>
